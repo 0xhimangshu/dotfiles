@@ -148,6 +148,8 @@
         ],
         "on-scroll-up": "brightnesscontrol.sh i 1",
         "on-scroll-down": "brightnesscontrol.sh d 1",
+        "exec": "brightnessctl get",
+        "tooltip": true,
         "min-length": 6
     },
 

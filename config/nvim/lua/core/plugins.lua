@@ -32,7 +32,8 @@ require("lazy").setup({
 
     { "lewis6991/hover.nvim" },
 
-    { "folke/neodev.nvim" }
+    { "folke/neodev.nvim" },
     
+    { "github/copilot.vim" }
 })
 
