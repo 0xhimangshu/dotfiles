@@ -1,0 +1,422 @@
+{
+    "layer": "top",
+    "output": [
+        "*"
+    ],
+    "position": "top",
+    "mod": "dock",
+    "height": 29,
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "reload_style_on_change": true,
+    "modules-left": [
+        "custom/padd",
+        "custom/l_end",
+        "wlr/taskbar",
+        "mpris",
+        "custom/r_end",
+        "custom/padd"
+    ],
+    "modules-center": [
+        "custom/padd",
+        "custom/l_end",
+        "temperature",
+        "cpu",
+        "memory",
+        "custom/r_end",
+        "custom/l_end",
+        "idle_inhibitor",
+        "clock",
+        "custom/r_end",
+        "custom/l_end",
+        "custom/weather",
+        "custom/r_end",
+        "custom/padd"
+    ],
+    "modules-right": [
+        "custom/padd",
+        "custom/l_end",
+        "backlight",
+        "custom/r_end",
+        "custom/l_end",
+        "network",
+        "custom/r_end",
+        "custom/l_end",
+        "pulseaudio",
+        "custom/r_end",
+        "custom/l_end",
+        "pulseaudio#microphone",
+        "custom/r_end",
+        "custom/l_end",
+        "custom/updates",
+        "custom/r_end",
+        "custom/l_end",
+        "privacy",
+        "tray",
+        "battery",
+        "custom/r_end",
+        "custom/l_end",
+        "custom/cliphist",
+        "custom/r_end",
+        "custom/l_end",
+        "custom/power",
+        "custom/r_end",
+        "custom/padd"
+    ],
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "rotate": 0,
+        "icon-size": 18,
+        "icon-theme": "Tela-circle-purple",
+        "spacing": 0,
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "ignore-list": [
+            "Alacritty"
+        ],
+        "app_ids-mapping": {
+            "firefoxdeveloperedition": "firefox-developer-edition",
+            "jetbrains-datagrip": "DataGrip"
+        }
+    },
+    "mpris": {
+        "format": "{player_icon} {dynamic}",
+        "rotate": 0,
+        "format-paused": "{status_icon} <i>{dynamic}</i>",
+        "player-icons": {
+            "default": "▶",
+            "mpv": "🎵"
+        },
+        "status-icons": {
+            "paused": ""
+        },
+        // "ignored-players": ["firefox"]
+        "max-length": 1000,
+        "interval": 1
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "rotate": 0,
+        "format-icons": {
+            "activated": "",
+            "deactivated": "󰛊"
+        },
+        "tooltip-format-activated": "Caffeine Mode Active",
+        "tooltip-format-deactivated": "Caffeine Mode Inactive"
+    },
+    "clock": {
+        "format": "{:%I:%M:%S %p 󰃭 %d·%m·%Y}",
+        "rotate": 0,
+        "interval": 1,
+        "format-alt": "{:%R 󰃭 %d·%m·%y}",
+        "tooltip-format": "<span>{calendar}</span>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "on-scroll": 1,
+            "on-click-right": "mode",
+            "format": {
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b>{}</b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "rotate": 0,
+        "format": "{icon} {percent}%",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "on-scroll-up": "brightnesscontrol.sh i 1",
+        "on-scroll-down": "brightnesscontrol.sh d 1",
+        "min-length": 6
+    },
+
+    // bakchodi
+    // {ifname} {ipaddr}/{cidr}
+    "network": {
+        "tooltip": false,
+        "rotate": 0,
+        "interval": 2,
+        "format-wifi": " {essid} ({signalStrength}%) {ipaddr}/{cidr}  {bandwidthDownBytes}  {bandwidthUpBytes}",
+        "format-ethernet": "󰈀  {bandwidthDownBytes}  {bandwidthUpBytes}",
+        "format-linked": "󰈀 {ifname} (No IP)",
+        "format-disconnected": "󰖪 Disconnected",
+        "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}",
+        "rotate": 0,
+        "format-muted": "婢",
+        "on-click": "pavucontrol -t 3",
+        "on-click-right": "volumecontrol.sh -s ''",
+        "on-click-middle": "volumecontrol.sh -o m",
+        "on-scroll-up": "volumecontrol.sh -o i",
+        "on-scroll-down": "volumecontrol.sh -o d",
+        "tooltip-format": "{icon} {desc} // {volume}%",
+        "scroll-step": 5,
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": [
+                "",
+                "",
+                ""
+            ]
+        }
+    },
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "rotate": 0,
+        "format-source": "",
+        "format-source-muted": "",
+        "on-click": "volumecontrol.sh -i m",
+        "on-click-right": "pavucontrol -t 4",
+        "on-click-middle": "volumecontrol.sh -i m",
+        "on-scroll-up": "volumecontrol.sh -i i",
+        "on-scroll-down": "volumecontrol.sh -i d",
+        "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
+        "scroll-step": 5
+    },
+    "custom/updates": {
+        "exec": "systemupdate.sh",
+        "return-type": "json",
+        "format": "{}",
+        "rotate": 0,
+        "on-click": "hyprctl dispatch exec 'systemupdate.sh up'",
+        "interval": 86400,
+        "tooltip": true,
+        "signal": 20,
+    },
+    "privacy": {
+        "icon-size": 13,
+        "icon-spacing": 5,
+        "transition-duration": 250,
+        "modules": [
+            {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+            {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            }
+        ]
+    },
+    "tray": {
+        "icon-size": 17,
+        "rotate": 0,
+        "spacing": 5
+    },
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon} {capacity}%",
+        "rotate": 0,
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": [
+            "󰂎",
+            "󰁺",
+            "󰁻",
+            "󰁼",
+            "󰁽",
+            "󰁾",
+            "󰁿",
+            "󰂀",
+            "󰂁",
+            "󰂂",
+            "󰁹"
+        ]
+    },
+    "custom/weather": {
+        "format": "{}",
+        "format-alt": "{alt}: {}",
+        "format-alt-click": "click",
+        "interval": 3600,
+        "return-type": "json",
+        "exec": "bash -c 'CITY=\"Jorhat\"; UNIT=\"m\"; LANG=\"en\"; WEATHER=$(curl -s \"wttr.in/$CITY?format=%l:+%c+%t+%w+%h&lang=$LANG\"); if [ $? -ne 0 ]; then echo \"{\\\"text\\\": \\\"Weather unavailable\\\", \\\"tooltip\\\": \\\"Failed to fetch weather data.\\\"}\"; else echo \"{\\\"text\\\": \\\"$WEATHER\\\", \\\"tooltip\\\": \\\"Weather in $CITY\\\"}\"; fi'"
+    },
+    "custom/cliphist": {
+        "format": "",
+        "rotate": 0,
+        "on-click": "sleep 0.1 && cliphist.sh c",
+        "on-click-right": "sleep 0.1 && cliphist.sh d",
+        "on-click-middle": "sleep 0.1 && cliphist.sh w",
+        "tooltip": true
+    },
+    "custom/power": {
+        "format": "{}",
+        "rotate": 0,
+        "exec": "echo ; echo  ",
+        "on-click": "logoutlaunch.sh 2",
+        "on-click-right": "logoutlaunch.sh 1",
+        // "interval": 86400, 
+        "tooltip": true
+    },
+    "cpu": {
+        "interval": 1,
+        "format": "󰍛 {usage}%",
+        "format-alt": "{icon0}{icon1}{icon2}{icon3}",
+        "format-icons": [
+            "▁",
+            "▂",
+            "▃",
+            "▄",
+            "▅",
+            "▆",
+            "▇",
+            "█"
+        ]
+    },
+    "memory": {
+        "states": {
+            "c": 90, // critical
+            "h": 60, // high
+            "m": 30, // medium
+        },
+        "interval": 1,
+        "format": "󰾆 {used}GB",
+        "format-m": "󰾅 {used}GB",
+        "format-h": "󰓅 {used}GB",
+        "format-c": " {used}GB",
+        "format-alt": "󰾆 {percentage}%",
+        "max-length": 10,
+        "tooltip": true,
+        "tooltip-format": "󰾆 {percentage}%\n {used:0.1f}GB/{total:0.1f}GB"
+    },
+    "temperature": {
+        "hwmon-path": "/sys/class/thermal/thermal_zone0/temp",
+        "critical-threshold": 60, 
+        "format-critical": "🔥  {temperatureC}°C", 
+        "format": "{icon} {temperatureC}°C",
+        "interval": 2,
+        "tooltip": false,
+        "format-icons": [
+            "", // Low (cold)
+            "", // Medium-low
+            "", // Medium
+            "", // Warm
+            "" // Hot
+        ]
+    },
+    // lol
+    "custom/l_end": {
+        "format": " ",
+        "interval": "once",
+        "tooltip": false
+    },
+    "custom/r_end": {
+        "format": " ",
+        "interval": "once",
+        "tooltip": false
+    },
+    "custom/sl_end": {
+        "format": " ",
+        "interval": "once",
+        "tooltip": false
+    },
+    "custom/sr_end": {
+        "format": " ",
+        "interval": "once",
+        "tooltip": false
+    },
+    "custom/rl_end": {
+        "format": " ",
+        "interval": "once",
+        "tooltip": false
+    },
+    "custom/rr_end": {
+        "format": " ",
+        "interval": "once",
+        "tooltip": false
+    },
+    "custom/padd": {
+        "format": "  ",
+        "interval": "once",
+        "tooltip": false
+    }
+}
+
+// positions generated based on config.ctl //
+
+	"modules-left": ["custom/padd","","custom/padd"],
+	"modules-center": ["custom/padd","","custom/padd"],
+	"modules-right": ["custom/padd","","custom/padd"],
+
+
+// sourced from modules based on config.ctl //
+
+
+
+// positions generated based on config.ctl //
+
+	"modules-left": ["custom/padd","","custom/padd"],
+	"modules-center": ["custom/padd","","custom/padd"],
+	"modules-right": ["custom/padd","","custom/padd"],
+
+
+// sourced from modules based on config.ctl //
+
+
+
+// positions generated based on config.ctl //
+
+	"modules-left": ["custom/padd","","custom/padd"],
+	"modules-center": ["custom/padd","","custom/padd"],
+	"modules-right": ["custom/padd","","custom/padd"],
+
+
+// sourced from modules based on config.ctl //
+
+
+
+// positions generated based on config.ctl //
+
+	"modules-left": ["custom/padd","","custom/padd"],
+	"modules-center": ["custom/padd","","custom/padd"],
+	"modules-right": ["custom/padd","","custom/padd"],
+
+
+// sourced from modules based on config.ctl //
+
+
+
+// positions generated based on config.ctl //
+
+	"modules-left": ["custom/padd","","custom/padd"],
+	"modules-center": ["custom/padd","","custom/padd"],
+	"modules-right": ["custom/padd","","custom/padd"],
+
+
+// sourced from modules based on config.ctl //
+

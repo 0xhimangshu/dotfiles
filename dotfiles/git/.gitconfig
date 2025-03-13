@@ -1,0 +1,32 @@
+[user]
+    name = 0xhimangshu
+    email = saikiahimangshu1256@gmail.com  
+[core]
+    editor = nvim
+    autocrlf = input 
+[alias]
+    st = status
+    co = checkout
+    br = branch
+    cm = commit -m
+    df = diff
+    lg = log --oneline --graph --all --decorate
+    amend = commit --amend --no-edit
+
+[push]
+    default = current
+
+[pull]
+    rebase = true  
+
+[init]
+    defaultBranch = main  
+
+[merge]
+    conflictstyle = diff3  
+
+[diff]
+    tool = nvimdiff  
+
+[credential]
+    helper = cache  
