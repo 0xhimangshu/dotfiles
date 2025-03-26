@@ -1,22 +1,22 @@
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
+export TERMINAL=kitty
 
 ZSH_THEME="jovial"
 
 plugins=(
+  zsh-history-enquirer
+
   git
   autojump
   urltools
   bgnotify
   zsh-autosuggestions
   zsh-syntax-highlighting
-  zsh-history-enquirer
   jovial
 )
 
 source $ZSH/oh-my-zsh.sh
-
-export TERMINAL=kitty
 
 eval "$(ssh-agent -s)" > /dev/null
 ssh-add ~/keys/github &> /dev/null

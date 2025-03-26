@@ -1,10 +1,16 @@
 * {
-    main-bg:            #24283be6;
-    main-fg:            #c0caf5ff;
-    main-br:            #bb9af7ff;
-    main-ex:            #7dcfffcc;
-    select-bg:          #7aa2f7ff;
-    select-fg:          #24283bff;
-    separatorcolor:     transparent;
-    border-color:       transparent;
+    main-bg:                     #1e1e2e; // Background color
+    main-fg:                     #cdd6f4; // Primary text color
+    accent-bg:                   #f38ba8; // Accent color (e.g., border)
+    select-bg:                   #f9e2af; // Selected item background
+    select-fg:                   #1e1e2e; // Selected item text
+    header-bg:                   #45475a; // Header background
+    header-fg:                   #ffffff; // Header text
+    list-bg:                     #313244; // List background
+    item-bg:                     #1e1e2e; // Unselected item background
+    icon-fg:                     #f38ba8; // Icon color
+    button-bg:                   #f38ba8; // Button background
+    button-fg:                   #1e1e2e; // Button text
+    footer-bg:                   #45475a; // Footer background
+    footer-fg:                   #ffffff; // Footer text
 }

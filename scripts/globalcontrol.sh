@@ -48,7 +48,7 @@ get_hashmap()
     fi
 }
 
-[ -f "${myConfDir}/himonshuuuuuuuuuuuu.conf" ] && source "${myConfDir}/himonshuuuuuuuuuuuu.conf"
+[ -f "${myConfDir}/himonshuuu.conf" ] && source "${myConfDir}/himonshuuu.conf"
 
 case "${enableWallDcol}" in
     0|1|2|3) ;;
@@ -56,7 +56,7 @@ case "${enableWallDcol}" in
 esac
 
 
-export myTheme = "mytheme"
+export myTheme="mytheme"
 export themeDir="$HOME/.config/myconf/themes/mytheme"
 export wallbashDir="${myConfDir}/wallbash"
 export enableWallDcol

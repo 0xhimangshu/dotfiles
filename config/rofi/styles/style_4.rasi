@@ -84,8 +84,8 @@ listview {
     spacing:                     0em;
     padding:                     1em;
     enabled:                     true;
-    columns:                     1;
-    lines:                       7;
+    columns:                     2;
+    lines:                       2;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -97,7 +97,7 @@ listview {
     cursor:                      "default";
     background-color:            @main-bg;
     text-color:                  @main-fg;
-    border-radius:               1.5em;
+    border-radius:               1.2em;
 }
 dummy {
     background-color:            transparent;

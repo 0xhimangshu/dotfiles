@@ -9,7 +9,7 @@ require("plugins.coc")
 require("plugins.lsp")
 require("plugins.treesitter")
 require("plugins.telescope")
-require("plugins.nvim-tree")
+require("plugins.neotree")
 require("plugins.git")
 require("plugins.theme")
 require("plugins.pyright")
@@ -53,11 +53,11 @@ vim.lsp.handlers["textDocument/hover"] = function(_, result, ctx, config)
     -- Close existing hover window if open
     close_hover()
 
-    -- Call the default hover handleri
+    -- Call the default hover handler
     local bufnr, winnr = vim.lsp.handlers.hover(_, result, ctx, config)
 
     -- If a window was opened, track its state
-    if winnr then
+    if winnr and vim.api.nvim_win_is_valid(winnr) then
         vim.b[bufnr].hover_open = true
         vim.b[bufnr].hover_win = winnr
 
@@ -70,5 +70,7 @@ vim.lsp.handlers["textDocument/hover"] = function(_, result, ctx, config)
             end,
         })
     end
+
+    return bufnr, winnr
 end
 

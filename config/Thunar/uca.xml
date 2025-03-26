@@ -5,7 +5,8 @@
 	<name>Open Terminal Here</name>
 	<submenu></submenu>
 	<unique-id>1741887280616332-1</unique-id>
-	<command>exo-open --working-directory %f --launch TerminalEmulator</command>
+	<command>export TERMINAL=kitty  # Or replace with your terminal
+exo-open --launch TerminalEmulator</command>
 	<description>Example for a custom action</description>
 	<range></range>
 	<patterns>*</patterns>

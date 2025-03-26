@@ -3,18 +3,17 @@ configuration {
     modi:                        "drun";
     show-icons:                  true;
     drun-display-format:         "{name}";
-    font:                        "JetBrainsMono Nerd Font 9";
+    font:                        "JetBrainsMono Nerd Font 10"; // Slightly larger font for readability
 }
 
 @theme "~/.config/rofi/theme.rasi"
-
 
 // Main //
 window {
     enabled:                     true;
     fullscreen:                  false;
-    width:                       40em;
-    height:                      32.8em;
+    width:                       30em;  // Reduced width
+    height:                      28em;  // Reduced height
     transparency:                "real";
     cursor:                      "default";
     spacing:                     0em;
@@ -23,33 +22,35 @@ window {
     border-radius:               0em;
     border-color:                transparent;
     background-color:            transparent;
-    background-image:            url("~/.config/rofi/assets/notification.png", width);
 }
+
 mainbox {
     enabled:                     true;
     orientation:                 vertical;
-    children:                    [ "dummy" , "frame" ];
+    children:                    [ "dummy", "frame" ];
     background-color:            transparent;
 }
+
 dummy {
-    padding:                     6em;
+    padding:                     4em;  // Reduced padding
     expand:                      false;
     background-color:            transparent;
 }
+
 frame {
     enabled:                     true;
     orientation:                 vertical;
-    children:                    [ "dummy2" , "listview" , "dummy2" ];
+    children:                    [ "listview" ];
     background-color:            transparent;
 }
 
 // Lists //
 listview {
     enabled:                     true;
-    spacing:                     0em;
-    padding:                     0em;
+    spacing:                     0.5em;  // Reduced spacing
+    padding:                     0.5em;  // Reduced padding
     columns:                     1;
-    lines:                       5;
+    lines:                       6;      // Increased lines slightly for better visibility
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -61,30 +62,28 @@ listview {
     cursor:                      "default";
     background-color:            transparent;
 }
-dummy2 {
-    spacing:                     0em;
-    padding:                     0em;
-    background-color:            transparent;
-}
-
 
 // Elements //
 element {
     enabled:                     true;
-    spacing:                     1em;
-    padding:                     1em;
+    spacing:                     0.5em;  // Reduced spacing
+    padding:                     0.5em;  // Reduced padding
     cursor:                      pointer;
     background-color:            transparent;
     text-color:                  @main-fg;
     border-radius:               0em;
 }
+
 element selected.normal {
     background-color:            @select-bg;
     text-color:                  @select-fg;
 }
+
 element-icon {
-    enabled:                     false;
+    enabled:                     true;  // Enable icons for better visual context
+    size:                        1.2em; // Adjust icon size
 }
+
 element-text {
     vertical-align:              0.5;
     horizontal-align:            0.5;
@@ -92,4 +91,3 @@ element-text {
     background-color:            transparent;
     text-color:                  inherit;
 }
-

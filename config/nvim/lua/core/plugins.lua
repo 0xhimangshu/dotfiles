@@ -14,7 +14,7 @@ require("lazy").setup({
 
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 
-    { "nvim-tree/nvim-tree.lua" },
+    { "nvim-neo-tree/neo-tree.nvim", dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim" } },
 
     { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
 
@@ -24,10 +24,9 @@ require("lazy").setup({
 
     { "nvim-tree/nvim-web-devicons" },
 
-    { "akinsho/bufferline.nvim", dependencies = "nvim-tree/nvim-web-devicons" },
-    
     { "nvim-lualine/lualine.nvim", dependencies = "nvim-tree/nvim-web-devicons" },
 
+    { "akinsho/bufferline.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },   
     -- { "glepnir/lspsaga.nvim" },
 
     { "lewis6991/hover.nvim" },

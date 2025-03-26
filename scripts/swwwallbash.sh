@@ -34,8 +34,8 @@ set +a
 
 fn_wallbash () {
     local tplt="${1}"
-    [ -f "${myConfDir}/himonshuuuuuuuuuuuu.conf" ] && source "${myConfDir}/himonshuuuuuuuuuuuu.conf"
-    # Skips the the template declared in ./himonshuuuuuuuuuuuu.conf
+    [ -f "${myConfDir}/himonshuuu.conf" ] && source "${myConfDir}/himonshuuu.conf"
+    # Skips the the template declared in ./himonshuuu.conf
     [[ " ${skip_wallbash[@]} " =~ " ${tplt} " ]] && echo "[skip: template] ${tplt}" && return 0
     eval target="$(head -1 "${tplt}" | awk -F '|' '{print $1}')"
     [ ! -d "$(dirname "${target}")" ] && echo "[skip: no dir] \"${target}\"" && return 0

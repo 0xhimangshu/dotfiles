@@ -16,12 +16,25 @@ lspconfig.lua_ls.setup({
     },
 })
 
+-- TypeScript/JavaScript LSP (for React)
+lspconfig.ts_ls.setup({
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+})
+
+-- Tailwind CSS LSP
+lspconfig.tailwindcss.setup({
+  filetypes = { "html", "css", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  root_dir = lspconfig.util.root_pattern("tailwind.config.js", "tailwind.config.ts", "package.json", ".git"),
+})
+
+
 local bg_color = vim.fn.synIDattr(vim.fn.hlID("Normal"), "bg")
 
 -- Enable LSP (TypeScript, Python, etc.)
 lspconfig.lua_ls.setup({ on_attach = on_attach })
-lspconfig.ts_ls.setup({})
 lspconfig.pyright.setup({})
 lspconfig.html.setup({})
 lspconfig.cssls.setup({})
+lspconfig.rust_analyzer.setup({})
 

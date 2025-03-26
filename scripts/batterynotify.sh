@@ -3,7 +3,7 @@
 undock=false
 scrDir=$(dirname "$(realpath "$0")")
 source $scrDir/globalcontrol.sh
-batterynotify_conf="${myConfgDir}/himonshuuuuuuuuuuuu.conf" 
+batterynotify_conf="${myConfgDir}/himonshuuu.conf" 
 config_info() {
 cat <<  EOF
 

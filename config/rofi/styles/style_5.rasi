@@ -1,9 +1,8 @@
 // Config //
 configuration {
-    modi:                        "drun,filebrowser,window,run";
+    modi:                        "drun,filebrowser,window";
     show-icons:                  true;
     display-drun:                " ";
-    display-run:                 " ";
     display-filebrowser:         " ";
     display-window:              " ";
     drun-display-format:         "{name}";
@@ -17,8 +16,8 @@ configuration {
 
 // Main //
 window {
-    height:                      31em;
-    width:                       50em;
+    height:                      35em;
+    width:                       35em;
     transparency:                "real";
     fullscreen:                  false;
     enabled:                     true;
@@ -33,7 +32,8 @@ mainbox {
     spacing:                     0em;
     padding:                     0em;
     orientation:                 vertical;
-    children:                    [ "inputbar" , "listbox" , "mode-switcher" ];
+  //  children:                    [ "inputbar" , "listbox" , "mode-switcher" ];// 
+    children:                       ["inputbar", "listbox"];
     background-color:            transparent;
 }
 
@@ -55,10 +55,9 @@ listbox {
     orientation:                 horizontal;
     children:                    [ "listview" ];
     background-color:            transparent;
-    background-image:            url("~/.cache/hyde/wall.blur", width);
 }
 listview {
-    padding:                     2em;
+    padding:                     1em;
     spacing:                     1em;
     enabled:                     true;
     columns:                     5;
@@ -85,9 +84,10 @@ mode-switcher {
 }
 button {
     cursor:                      pointer;
-    padding:                     2.5em;
-    spacing:                     0em;
-    border-radius:               3em;
+    padding:                     1px;
+    spacing:                     1em;
+    size:                        5em;
+    border-radius:               100%;
     background-color:            @main-bg;
     text-color:                  @main-fg;
 }
@@ -101,24 +101,26 @@ button selected {
 element {
     orientation:                 vertical;
     enabled:                     true;
-    spacing:                     0.2em;
-    padding:                     0.5em;
+    spacing:                     0.1em;
+    padding:                     3px;
+    margin:                      2px;
     cursor:                      pointer;
     background-color:            transparent;
     text-color:                  @main-fg;
+    border-radius:               10px;
 }
 element selected.normal {
     background-color:            @select-bg;
     text-color:                  @select-fg;
 }
 element-icon {
-    size:                        5.5em;
+    size:                        3em;
     cursor:                      inherit;
     background-color:            transparent;
     text-color:                  inherit;
 }
 element-text {
-    vertical-align:              0.5;
+    vertical-align:              0.3;
     horizontal-align:            0.5;
     cursor:                      inherit;
     background-color:            transparent;

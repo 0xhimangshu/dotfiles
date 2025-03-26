@@ -5,131 +5,91 @@
     ],
     "position": "top",
     "mod": "dock",
-    "height": 29,
+    "height": 30,
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
     "reload_style_on_change": true,
-    "modules-left": [
-        "custom/padd",
-        "custom/l_end",
-        "wlr/taskbar",
-        "mpris",
-        "custom/r_end",
-        "custom/padd"
-    ],
     "modules-center": [
-        "custom/padd",
-        "custom/l_end",
-        "temperature",
-        "cpu",
-        "memory",
-        "custom/r_end",
-        "custom/l_end",
-        "idle_inhibitor",
+        "wlr/taskbar",
         "clock",
-        "custom/r_end",
-        "custom/l_end",
-        "custom/weather",
-        "custom/r_end",
-        "custom/padd"
+        "hyprland/workspaces",
+        "custom/turbo-fan-toggle"
+    ],
+    "modules-left": [
+        "custom/rofi-app-menu",
+        "mpris",
+        "privacy"
     ],
     "modules-right": [
-        "custom/padd",
-        "custom/l_end",
-        "backlight",
-        "custom/r_end",
-        "custom/l_end",
-        "network",
-        "custom/r_end",
-        "custom/l_end",
-        "pulseaudio",
-        "custom/r_end",
-        "custom/l_end",
-        "pulseaudio#microphone",
-        "custom/r_end",
-        "custom/l_end",
-        "custom/updates",
-        "custom/r_end",
-        "custom/l_end",
-        "privacy",
         "tray",
+        "network",
+        "pulseaudio#microphone",
+        "pulseaudio",
+        "backlight",
         "battery",
-        "custom/r_end",
-        "custom/l_end",
-        "custom/cliphist",
-        "custom/r_end",
-        "custom/l_end",
-        "custom/power",
-        "custom/r_end",
-        "custom/padd"
+        "custom/power"
     ],
     "wlr/taskbar": {
         "format": "{icon}",
         "rotate": 0,
-        "icon-size": 18,
+        "icon-size": 22,
         "icon-theme": "Tela-circle-purple",
-        "spacing": 0,
+        "spacing": 4,
         "tooltip-format": "{title}",
-        "on-click": "activate",
-        "on-click-middle": "close",
-        "ignore-list": [
-            "Alacritty"
-        ],
-        "app_ids-mapping": {
-            "firefoxdeveloperedition": "firefox-developer-edition",
-            "jetbrains-datagrip": "DataGrip"
-        }
+        "on-click": "activate"
+    },
+    "tray": {
+        "icon-size": 20,
+        "rotate": 3,
+        "spacing": 4
     },
     "mpris": {
-        "format": "{player_icon} {dynamic}",
-        "rotate": 0,
-        "format-paused": "{status_icon} <i>{dynamic}</i>",
+        "format": "<span color='green' font_size='x-large'>{player_icon}</span> {title} - {artist}",
+        "format-paused": "{status_icon} {title} - {artist}",
+        "max-length": 100,
+        "interval": 1,
         "player-icons": {
-            "default": "▶",
-            "mpv": "🎵"
+            "default": "🎵",
+            "spotify": ""
         },
         "status-icons": {
-            "paused": ""
+            "paused": "▶"
         },
-        // "ignored-players": ["firefox"]
-        "max-length": 1000,
-        "interval": 1
+        "exec-if": "playerctl status > /dev/null 2>&1",
+        "escape": true,
+        "tooltip": true,
+        "on-click": "playerctl play-pause",
+        "on-click-right": "playerctl next",
+        "on-scroll-up": "playerctl position 5+",
+        "on-scroll-down": "playerctl position 5-"
     },
-    "idle_inhibitor": {
+
+    "hyprland/workspaces": {
         "format": "{icon}",
-        "rotate": 0,
+        "on-click": "activate",
         "format-icons": {
-            "activated": "",
-            "deactivated": "󰛊"
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9"
         },
-        "tooltip-format-activated": "Caffeine Mode Active",
-        "tooltip-format-deactivated": "Caffeine Mode Inactive"
-    },
-    "clock": {
-        "format": "{:%I:%M:%S %p 󰃭 %d·%m·%Y}",
-        "rotate": 0,
-        "interval": 1,
-        "format-alt": "{:%R 󰃭 %d·%m·%y}",
-        "tooltip-format": "<span>{calendar}</span>",
-        "calendar": {
-            "mode": "month",
-            "mode-mon-col": 3,
-            "on-scroll": 1,
-            "on-click-right": "mode",
-            "format": {
-                "months": "<span color='#ffead3'><b>{}</b></span>",
-                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
-                "today": "<span color='#ff6699'><b>{}</b></span>"
-            }
+        "sort-by-number": true,
+        "on-click-middle": "close",
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "active-only": false,
+        "all-outputs": true,
+        "show-special": true,
+        "persistent-workspaces": {
+            "*": 5
         },
-        "actions": {
-            "on-click-right": "mode",
-            "on-click-forward": "tz_up",
-            "on-click-backward": "tz_down",
-            "on-scroll-up": "shift_up",
-            "on-scroll-down": "shift_down"
-        }
+        "tooltip": false
     },
     "backlight": {
         "device": "intel_backlight",
@@ -146,24 +106,22 @@
             "",
             ""
         ],
-        "on-scroll-up": "brightnesscontrol.sh i 1",
-        "on-scroll-down": "brightnesscontrol.sh d 1",
+        "on-scroll-up": "brightnesscontrol.sh i 5",
+        "on-scroll-down": "brightnesscontrol.sh d 5",
         "exec": "brightnessctl get",
         "tooltip": true,
         "min-length": 6
     },
 
-    // bakchodi
-    // {ifname} {ipaddr}/{cidr}
     "network": {
         "tooltip": false,
         "rotate": 0,
-        "interval": 2,
-        "format-wifi": " {essid} ({signalStrength}%) {ipaddr}/{cidr}  {bandwidthDownBytes}  {bandwidthUpBytes}",
-        "format-ethernet": "󰈀  {bandwidthDownBytes}  {bandwidthUpBytes}",
+        "interval": 1,
+        "format-wifi": " {essid} ({signalStrength}%)  {bandwidthDownBytes}  {bandwidthUpBytes}",
+        "format-ethernet": "󰈀 <span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>",
         "format-linked": "󰈀 {ifname} (No IP)",
-        "format-disconnected": "󰖪 Disconnected",
-        "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>"
+        "format-disconnected": "󰖪 Disconnected"
+
     },
     "pulseaudio": {
         "format": "{icon} {volume}",
@@ -191,7 +149,7 @@
         }
     },
     "pulseaudio#microphone": {
-        "format": "{format_source}",
+        "format": "{format_source} {source_volume}",
         "rotate": 0,
         "format-source": "",
         "format-source-muted": "",
@@ -203,38 +161,7 @@
         "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
         "scroll-step": 5
     },
-    "custom/updates": {
-        "exec": "systemupdate.sh",
-        "return-type": "json",
-        "format": "{}",
-        "rotate": 0,
-        "on-click": "hyprctl dispatch exec 'systemupdate.sh up'",
-        "interval": 86400,
-        "tooltip": true,
-        "signal": 20,
-    },
-    "privacy": {
-        "icon-size": 13,
-        "icon-spacing": 5,
-        "transition-duration": 250,
-        "modules": [
-            {
-                "type": "screenshare",
-                "tooltip": true,
-                "tooltip-icon-size": 24
-            },
-            {
-                "type": "audio-in",
-                "tooltip": true,
-                "tooltip-icon-size": 24
-            }
-        ]
-    },
-    "tray": {
-        "icon-size": 17,
-        "rotate": 0,
-        "spacing": 5
-    },
+
     "battery": {
         "states": {
             "good": 95,
@@ -243,6 +170,7 @@
         },
         "format": "{icon} {capacity}%",
         "rotate": 0,
+        "interval": 1,
         "format-charging": " {capacity}%",
         "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
@@ -260,165 +188,79 @@
             "󰁹"
         ]
     },
-    "custom/weather": {
-        "format": "{}",
-        "format-alt": "{alt}: {}",
-        "format-alt-click": "click",
-        "interval": 3600,
-        "return-type": "json",
-        "exec": "bash -c 'CITY=\"Jorhat\"; UNIT=\"m\"; LANG=\"en\"; WEATHER=$(curl -s \"wttr.in/$CITY?format=%l:+%c+%t+%w+%h&lang=$LANG\"); if [ $? -ne 0 ]; then echo \"{\\\"text\\\": \\\"Weather unavailable\\\", \\\"tooltip\\\": \\\"Failed to fetch weather data.\\\"}\"; else echo \"{\\\"text\\\": \\\"$WEATHER\\\", \\\"tooltip\\\": \\\"Weather in $CITY\\\"}\"; fi'"
+
+
+    "privacy": {
+        "icon-size": 13,
+        "icon-spacing": 5,
+        // "transition-duration": 250,
+        "modules": [
+            {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+            {
+                "type": "audio-out",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+            {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+        ]
     },
-    "custom/cliphist": {
-        "format": "",
+
+    "clock": {
+        "format": "{:%I:%M:%S %p 󰃭 %d·%m·%Y}",
         "rotate": 0,
-        "on-click": "sleep 0.1 && cliphist.sh c",
-        "on-click-right": "sleep 0.1 && cliphist.sh d",
-        "on-click-middle": "sleep 0.1 && cliphist.sh w",
-        "tooltip": true
+        "interval": 1,
+        // "format-alt": "{:%R 󰃭 %d·%m·%y}",
+        "tooltip-format": "<span>{calendar}</span>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "on-scroll": 1,
+            "on-click-right": "mode",
+            "format": {
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b>{}</b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
     },
+
     "custom/power": {
         "format": "{}",
         "rotate": 0,
         "exec": "echo ; echo  ",
-        "on-click": "logoutlaunch.sh 2",
-        "on-click-right": "logoutlaunch.sh 1",
+        "on-click": "logoutlaunch.sh",
+        "on-click-right": "logoutlaunch.sh",
         // "interval": 86400, 
         "tooltip": true
     },
-    "cpu": {
-        "interval": 1,
-        "format": "󰍛 {usage}%",
-        "format-alt": "{icon0}{icon1}{icon2}{icon3}",
-        "format-icons": [
-            "▁",
-            "▂",
-            "▃",
-            "▄",
-            "▅",
-            "▆",
-            "▇",
-            "█"
-        ]
-    },
-    "memory": {
-        "states": {
-            "c": 90, // critical
-            "h": 60, // high
-            "m": 30, // medium
-        },
-        "interval": 1,
-        "format": "󰾆 {used}GB",
-        "format-m": "󰾅 {used}GB",
-        "format-h": "󰓅 {used}GB",
-        "format-c": " {used}GB",
-        "format-alt": "󰾆 {percentage}%",
-        "max-length": 10,
+    "custom/rofi-app-menu": {
+        "format": "󰣇",
+        "on-click": "pkill rofi || sh ~/.local/share/bin/rofilaunch.sh d",
         "tooltip": true,
-        "tooltip-format": "󰾆 {percentage}%\n {used:0.1f}GB/{total:0.1f}GB"
+        "tooltip-format": "<span color='#ffffff'>{}</span>",
+        "exec": "uname -r"
     },
-    "temperature": {
-        "hwmon-path": "/sys/class/thermal/thermal_zone0/temp",
-        "critical-threshold": 60, 
-        "format-critical": "🔥  {temperatureC}°C", 
-        "format": "{icon} {temperatureC}°C",
-        "interval": 2,
-        "tooltip": false,
-        "format-icons": [
-            "", // Low (cold)
-            "", // Medium-low
-            "", // Medium
-            "", // Warm
-            "" // Hot
-        ]
-    },
-    // lol
-    "custom/l_end": {
-        "format": " ",
-        "interval": "once",
-        "tooltip": false
-    },
-    "custom/r_end": {
-        "format": " ",
-        "interval": "once",
-        "tooltip": false
-    },
-    "custom/sl_end": {
-        "format": " ",
-        "interval": "once",
-        "tooltip": false
-    },
-    "custom/sr_end": {
-        "format": " ",
-        "interval": "once",
-        "tooltip": false
-    },
-    "custom/rl_end": {
-        "format": " ",
-        "interval": "once",
-        "tooltip": false
-    },
-    "custom/rr_end": {
-        "format": " ",
-        "interval": "once",
-        "tooltip": false
-    },
-    "custom/padd": {
-        "format": "  ",
-        "interval": "once",
+   
+    "custom/turbo-fan-toggle": {
+        "format": "󱜝",
+        "format-alt": "󰈐",
+        "on-click": "sh ~/.local/share/bin/toggle_fan.sh",
+        "on-click-right": "format-alt",
         "tooltip": false
     }
 }
-
-// positions generated based on config.ctl //
-
-	"modules-left": ["custom/padd","","custom/padd"],
-	"modules-center": ["custom/padd","","custom/padd"],
-	"modules-right": ["custom/padd","","custom/padd"],
-
-
-// sourced from modules based on config.ctl //
-
-
-
-// positions generated based on config.ctl //
-
-	"modules-left": ["custom/padd","","custom/padd"],
-	"modules-center": ["custom/padd","","custom/padd"],
-	"modules-right": ["custom/padd","","custom/padd"],
-
-
-// sourced from modules based on config.ctl //
-
-
-
-// positions generated based on config.ctl //
-
-	"modules-left": ["custom/padd","","custom/padd"],
-	"modules-center": ["custom/padd","","custom/padd"],
-	"modules-right": ["custom/padd","","custom/padd"],
-
-
-// sourced from modules based on config.ctl //
-
-
-
-// positions generated based on config.ctl //
-
-	"modules-left": ["custom/padd","","custom/padd"],
-	"modules-center": ["custom/padd","","custom/padd"],
-	"modules-right": ["custom/padd","","custom/padd"],
-
-
-// sourced from modules based on config.ctl //
-
-
-
-// positions generated based on config.ctl //
-
-	"modules-left": ["custom/padd","","custom/padd"],
-	"modules-center": ["custom/padd","","custom/padd"],
-	"modules-right": ["custom/padd","","custom/padd"],
-
-
-// sourced from modules based on config.ctl //
-
