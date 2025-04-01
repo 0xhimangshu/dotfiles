@@ -1,0 +1,100 @@
+configuration {
+    modi: "drun";
+    show-icons: false;
+    font: "Noto Color Emoji 10";
+
+}
+
+@theme "~/.config/rofi/theme.rasi"
+
+window {
+    transparency: "real";
+    fullscreen: false;
+    enabled: true;
+    cursor: "default";
+    spacing: 0;
+    padding: 0;
+    border-color: @main-br;
+    background-color: @main-bg;
+}
+
+mainbox {
+    enabled: true;
+    spacing: 0;
+    padding: 0.5em;
+    orientation: vertical;
+    children: [ "wallbox", "listbox" ];
+    background-color: transparent;
+}
+
+wallbox {
+    spacing: 0;
+    padding: 0;
+    expand: false;
+    orientation: horizontal;
+    background-color: transparent;
+}
+
+inputbar {
+    enabled: true;
+    padding: 0;
+    children: [ "entry" ];
+    background-color: @main-bg;
+    expand: true;
+}
+
+entry {
+    enabled: true;
+    padding: 1.8em;
+    text-color: @main-fg;
+    background-color: transparent;
+}
+
+listbox {
+    spacing: 0;
+    padding: 0;
+    orientation: vertical;
+    children: [
+            "inputbar",
+         "listview" ];
+    background-color: transparent;
+}
+
+listview {
+    enabled: true;
+    // columns: 6;
+    // lines: 6;
+    cycle: true;
+    gap: 2px;
+    fixed-height: true;
+    fixed-columns: true;
+    expand: false;
+    cursor: "default";
+    background-color: transparent;
+    text-color: @main-fg;
+}
+
+element {
+    enabled: true;
+    padding: 2px;
+    margin-left: 4px;
+    cursor: pointer;
+    background-color: @main-fg;
+    text-color: @main-fg;
+    color: transparent;
+    border-radius: 10px;
+    // width: 60px;
+    // height: 60px;
+}
+
+element selected.normal {
+    background-color: @select-bg;
+    text-color: @select-fg;
+    border-radius: 10px;
+}
+
+element-text {
+    font: "Noto Color Emoji";
+    cursor: inherit;
+    background-color: transparent;
+}

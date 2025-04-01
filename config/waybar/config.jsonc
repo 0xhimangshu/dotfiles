@@ -18,6 +18,9 @@
     ],
     "modules-left": [
         "custom/rofi-app-menu",
+        "cpu",
+        "temperature",
+        "memory",
         "mpris",
         "privacy"
     ],
@@ -64,7 +67,6 @@
         "on-scroll-up": "playerctl position 5+",
         "on-scroll-down": "playerctl position 5-"
     },
-
     "hyprland/workspaces": {
         "format": "{icon}",
         "on-click": "activate",
@@ -77,24 +79,25 @@
             "6": "6",
             "7": "7",
             "8": "8",
-            "9": "9"
+            "9": "9",
+            "10": "10"
         },
         "sort-by-number": true,
         "on-click-middle": "close",
         "on-scroll-up": "hyprctl dispatch workspace e+1",
         "on-scroll-down": "hyprctl dispatch workspace e-1",
-        "active-only": false,
+        "active-only": true,
         "all-outputs": true,
         "show-special": true,
         "persistent-workspaces": {
             "*": 5
         },
-        "tooltip": false
+        "tooltip": true
     },
     "backlight": {
         "device": "intel_backlight",
         "rotate": 0,
-        "format": "{icon} {percent}%",
+        "format": "<span font_size='x-large'>{icon}</span> {percent}%",
         "format-icons": [
             "",
             "",
@@ -112,21 +115,19 @@
         "tooltip": true,
         "min-length": 6
     },
-
     "network": {
         "tooltip": false,
         "rotate": 0,
         "interval": 1,
-        "format-wifi": " {essid} ({signalStrength}%)  {bandwidthDownBytes}  {bandwidthUpBytes}",
-        "format-ethernet": "󰈀 <span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>",
-        "format-linked": "󰈀 {ifname} (No IP)",
+        "format-wifi": "<span font_size='x-large'></span> {essid} ({signalStrength}%)  {bandwidthDownBytes}  {bandwidthUpBytes}",
+        "format-ethernet": "<span font_size='x-large'>󰈀</span> <span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>",
+        "format-linked": "<span font_size='x-large'>󰈀</span> {ifname} (No IP)",
         "format-disconnected": "󰖪 Disconnected"
-
     },
     "pulseaudio": {
         "format": "{icon} {volume}",
         "rotate": 0,
-        "format-muted": "婢",
+        "format-muted": "<span font_size='x-large'>婢</span>",
         "on-click": "pavucontrol -t 3",
         "on-click-right": "volumecontrol.sh -s ''",
         "on-click-middle": "volumecontrol.sh -o m",
@@ -149,7 +150,7 @@
         }
     },
     "pulseaudio#microphone": {
-        "format": "{format_source} {source_volume}",
+        "format": "<span font_size='x-large'>{format_source}</span> {source_volume}",
         "rotate": 0,
         "format-source": "",
         "format-source-muted": "",
@@ -161,7 +162,6 @@
         "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
         "scroll-step": 5
     },
-
     "battery": {
         "states": {
             "good": 95,
@@ -171,29 +171,69 @@
         "format": "{icon} {capacity}%",
         "rotate": 0,
         "interval": 1,
-        "format-charging": " {capacity}%",
-        "format-plugged": " {capacity}%",
+        "format-charging": "<span font_size='x-large'></span> {capacity}%",
+        "format-plugged": "<span font_size='x-large'></span> {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": [
-            "󰂎",
-            "󰁺",
-            "󰁻",
-            "󰁼",
-            "󰁽",
-            "󰁾",
-            "󰁿",
-            "󰂀",
-            "󰂁",
-            "󰂂",
-            "󰁹"
+            "<span color='#ff0000'>󰂎</span>",
+            "<span color='#ff3300'>󰁺</span>",
+            "<span color='#ff6600'>󰁻</span>",
+            "<span color='#ff9900'>󰁼</span>",
+            "<span color='#ffcc00'>󰁽</span>",
+            "<span color='#ffff00'>󰁾</span>",
+            "<span color='#ccff00'>󰁿</span>",
+            "<span color='#99ff00'>󰂀</span>",
+            "<span color='#66ff00'>󰂁</span>",
+            "<span color='#33ff00'>󰂂</span>",
+            "<span color='#ff0000'>󰁹</span>"
         ]
     },
-
-
+    "cpu": {
+        "interval": 1,
+        "states": {
+            "critical": 90,
+            "warning": 70,
+            "normal": 30
+        },
+        "format": "<span font_size='x-large' color='#c0ff93'>󰍛</span> {usage}%",
+        "format-normal": "<span font_size='x-large' color='#33ff00'>󰍛</span> {usage}%",
+        "format-warning": "<span font_size='x-large' color='#ffff00'>󰍛</span> {usage}%",
+        "format-critical": "<span font_size='x-large' color='#ff0000'>󰍛</span> {usage}%",
+        "tooltip": false
+    },
+    "memory": {
+        "states": {
+            "c": 90,
+            "h": 60,
+            "m": 30
+        },
+        "interval": 1,
+        "format": "<span font_size='x-large' color='#33ff00'>󰾆 </span>{used:0.1f}GB/{total:0.1f}GB",
+        "format-m": "<span font_size='x-large' color='#ffff00'>󰾅 </span>{used:0.1f}GB/{total:0.1f}GB",
+        "format-h": "<span font_size='x-large' color='#ff9900'>󰓅 </span>{used:0.1f}GB/{total:0.1f}GB",
+        "format-c": "<span font_size='x-large' color='#ff0000'></span>{used:0.1f}GB/{total:0.1f}GB",
+        "format-alt": "<span font_size='x-large' color='#33ff00'>󰾆 {percentage}%</span>",
+        // "max-length": 10,
+        "tooltip": false
+    },
+    "temperature": {
+        "hwmon-path": "/sys/class/thermal/thermal_zone0/temp",
+        "critical-threshold": 60,
+        "format-critical": "🔥  {temperatureC}°C",
+        "format": "{icon} {temperatureC}°C",
+        "interval": 2,
+        "tooltip": false,
+        "format-icons": [
+            "<span font_size='x-large' color='#89b4fa'></span>",
+            "<span font_size='x-large' color='#94e2d5'></span>",
+            "<span font_size='x-large' color='#a6e3a1'></span>",
+            "<span font_size='x-large' color='#f9e2af'></span>",
+            "<span font_size='x-large' color='#f38ba8'></span>"
+        ]
+    },
     "privacy": {
         "icon-size": 13,
         "icon-spacing": 5,
-        // "transition-duration": 250,
         "modules": [
             {
                 "type": "audio-in",
@@ -209,15 +249,13 @@
                 "type": "screenshare",
                 "tooltip": true,
                 "tooltip-icon-size": 24
-            },
+            }
         ]
     },
-
     "clock": {
-        "format": "{:%I:%M:%S %p 󰃭 %d·%m·%Y}",
+        "format": "{:%I:%M:%S %p <span font_size='x-large'>󰃭</span> %d·%m·%Y}",
         "rotate": 0,
         "interval": 1,
-        // "format-alt": "{:%R 󰃭 %d·%m·%y}",
         "tooltip-format": "<span>{calendar}</span>",
         "calendar": {
             "mode": "month",
@@ -238,29 +276,26 @@
             "on-scroll-down": "shift_down"
         }
     },
-
     "custom/power": {
         "format": "{}",
         "rotate": 0,
         "exec": "echo ; echo  ",
         "on-click": "logoutlaunch.sh",
         "on-click-right": "logoutlaunch.sh",
-        // "interval": 86400, 
         "tooltip": true
     },
     "custom/rofi-app-menu": {
-        "format": "󰣇",
+        "format": "<span font_size='x-large'>󰣇</span> {}",
         "on-click": "pkill rofi || sh ~/.local/share/bin/rofilaunch.sh d",
         "tooltip": true,
         "tooltip-format": "<span color='#ffffff'>{}</span>",
-        "exec": "uname -r"
+        "exec": "echo $(whoami)@$(hostnamectl --json=pretty | jq -r .Hostname)"
+        // "interval": 30
     },
-   
     "custom/turbo-fan-toggle": {
         "format": "󱜝",
         "format-alt": "󰈐",
         "on-click": "sh ~/.local/share/bin/toggle_fan.sh",
-        "on-click-right": "format-alt",
         "tooltip": false
     }
 }

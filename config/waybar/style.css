@@ -1,15 +1,15 @@
 * {
     border: none;
-    /* border-radius: 0px; */
     font-family: "JetBrainsMono Nerd Font";
     font-weight: bold;
     font-size: 10px;
     min-height: 10px;
-
+    margin-top: 1px;
 }
 
 window#waybar {
     background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.3s ease;
 }
 
 window#waybar:hover {
@@ -23,13 +23,7 @@ tooltip {
     border-width: 0px;
 }
 
-#taskbar {
-    background-color: #2a3039;
-    border-radius: 10px;
-    margin-left: 8px;
-    margin-right: 8px;
-}
-
+#taskbar,
 #workspaces {
     background-color: #2a3039;
     border-radius: 10px;
@@ -40,17 +34,16 @@ tooltip {
 #workspaces button {
     background-color: #515151;
     color: #ffffff;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 2px 5px;
     margin: 2px;
     border-radius: 8px;
     font-size: 15px;
+    transition: all 0.3s cubic-bezier(.55, -0.68, .48, 1.682);
 }
 
 #workspaces button.active {
     background-color: #a4b0b1;
     color: #000000;
-    /* cursor: pointer; */
 }
 
 #workspaces button.urgent {
@@ -58,18 +51,20 @@ tooltip {
     color: #ffffff;
 }
 
+#workspaces button.special {
+    background-color: #ff4668;
+    color: #ffffff;
+}
+
 #workspaces button:hover {
     background-color: #414868;
     color: #ffffff;
-    transition: all 0.3s cubic-bezier(.55, -0.68, .48, 1.682);
 }
 
 #taskbar button {
     box-shadow: none;
     text-shadow: none;
-    padding: 0px;
     border-radius: 8px;
-    margin-top: 1px;
     margin: 2px;
     padding: 2px;
     animation: tb_normal 20s ease-in-out 1;
@@ -96,18 +91,34 @@ tooltip {
     min-height: 10px;
 }
 
-
 #custom-cliphist,
 #pulseaudio,
 #custom-turbo-fan-toggle,
-#custom-rofi-app-menu {
+#custom-rofi-app-menu,
+#backlight,
+#network,
+#battery,
+#tray,
+#clock,
+#privacy,
+#cpu,
+#memory,
+#temperature,
+#custom-power,
+#mpris {
     background-color: #2a3039;
     color: #ffffff;
-    padding-left: 8px;
+    border-radius: 10px;
+    padding: 0 8px;
+}
+
+#custom-cliphist,
+#pulseaudio,
+#custom-turbo-fan-toggle {
     padding-right: 12px;
     font-size: 20px;
-    border-radius: 10px;
 }
+
 
 #pulseaudio {
     margin-left: 4px;
@@ -122,39 +133,25 @@ tooltip {
 #battery,
 #tray,
 #clock,
-#privacy {
-    background-color: #2a3039;
-    color: #ffffff;
-    padding-left: 8px;
-    padding-right: 8px;
-    margin-left: 4px;
-    margin-right: 4px;
+#privacy,
+#cpu,
+#memory,
+#temperature {
     font-size: 20px;
-    border-radius: 10px;
+    margin: 0 4px;
 }
 
-#custom-power {
-    font-size: 14px;
-    background-color: #2a3039;
-    color: #ffffff;
-    padding-left: 10px;
-    padding-right: 14px;
-    margin-left: 4px;
-    margin-right: 4px;
-    border-radius: 10px;
+#memory {
+    margin-right: 8px;
 }
 
-
-#mpris {
-    font-size: 10px;
-    background-color: #2a3039;
-    color: #ffffff;
-    margin-left: 10px;
-    padding-left: 10px;
-    padding-right: 12px;
-    border-radius: 10px;
+#cpu {
+    margin-left: 8px;
 }
 
+#cpu,
+#memory,
+#temperature,
 #clock,
 #backlight,
 #network,
@@ -163,27 +160,38 @@ tooltip {
     font-size: 10px;
 }
 
+#custom-power {
+    font-size: 14px;
+    padding: 0 14px;
+    margin: 0 4px;
+}
+
+#mpris {
+    font-size: 10px;
+    padding: 0 12px;
+}
+
 #privacy-item.audio-in {
-    color:#6aff00;
+    color: #6aff00;
     animation: blink 0.5s infinite;
 }
 
 #privacy-item.audio-out {
-    color:#ff7300;
-    /* animation: blink 2s infinite; */
+    color: #ff7300;
+    animation: blink 2s infinite;
 }
 
 #privacy-item.screenshare {
-    color:#ffb956;
-    /* animation: blink 2s infinite; */
+    color: #ffb956;
+    animation: blink 2s infinite;
+}
+
+#custom-turbo-fan-toggle {
+    animation: blink 300ms infinite;
 }
 
 @keyframes blink {
     50% {
         opacity: 0;
     }
-}
-
-#custom-turbo-fan-toggle {
-    animation: blink 300ms infinite;
 }
