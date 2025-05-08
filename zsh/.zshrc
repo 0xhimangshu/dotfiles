@@ -2,8 +2,8 @@ export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
 export TERMINAL=kitty
 
-ZSH_THEME="jovial"
-
+#ZSH_THEME="jovial"
+ZSH_THEME="robbyrussell"
 plugins=(
   zsh-history-enquirer
 
@@ -28,3 +28,7 @@ export NVM_DIR="$HOME/.nvm"
 alias dotfiles='/usr/bin/git --git-dir="$HOME/dotfiles/.git" --work-tree="$HOME"'
 
 
+
+export PATH=$PATH:/home/himonshuuu/.spicetify
+
+if [ -e /home/himonshuuu/.nix-profile/etc/profile.d/nix.sh ]; then . /home/himonshuuu/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

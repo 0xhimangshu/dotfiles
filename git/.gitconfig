@@ -1,6 +1,7 @@
 [user]
     name = 0xhimangshu
     email = saikiahimangshu1256@gmail.com  
+	signingkey = 189D1B9319C8061A777A89FFBF2647652B8D16C3
 [core]
     editor = nvim
     autocrlf = input 
@@ -30,3 +31,5 @@
 
 [credential]
     helper = cache  
+[commit]
+	gpgsign = true

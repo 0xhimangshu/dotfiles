@@ -21,6 +21,7 @@
         "cpu",
         "temperature",
         "memory",
+        "custom/keypress",
         "mpris",
         "privacy"
     ],
@@ -296,6 +297,13 @@
         "format": "󱜝",
         "format-alt": "󰈐",
         "on-click": "sh ~/.local/share/bin/toggle_fan.sh",
+        "tooltip": false
+    },
+    "custom/keypress": {
+        "exec": "waybar-waykey",
+        "return-type": "json",
+        "interval": 0,
+        "format": "{}",
         "tooltip": false
     }
 }

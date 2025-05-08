@@ -4,7 +4,7 @@
     font-weight: bold;
     font-size: 10px;
     min-height: 10px;
-    margin-top: 1px;
+    /* margin-top: 1px; */
 }
 
 window#waybar {
@@ -77,7 +77,7 @@ tooltip {
 }
 
 #taskbar button:hover {
-    background: #7aa2f7;
+    background: #ff4747;
     color: #cfc9c2;
     animation: tb_hover 20s ease-in-out 1;
     transition: all 0.3s cubic-bezier(.55, -0.68, .48, 1.682);
@@ -91,6 +91,7 @@ tooltip {
     min-height: 10px;
 }
 
+#custom-waykey,
 #custom-cliphist,
 #pulseaudio,
 #custom-turbo-fan-toggle,
