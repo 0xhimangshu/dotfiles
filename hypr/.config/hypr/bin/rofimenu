@@ -1,0 +1,54 @@
+ #!/bin/bash
+ 
+
+readarray -t curPos < <(hyprctl cursorpos -j | jq -r '.x,.y')
+readarray -t monRes < <(hyprctl -j monitors | jq '.[] | select(.focused==true) | .width,.height,.scale,.x,.y')
+readarray -t offRes < <(hyprctl -j monitors | jq -r '.[] | select(.focused==true).reserved | map(tostring) | join("\n")')
+
+monRes[2]="$(echo "${monRes[2]}" | sed "s/\.//")"
+monRes[0]="$(( ${monRes[0]} * 100 / ${monRes[2]} ))"
+monRes[1]="$(( ${monRes[1]} * 100 / ${monRes[2]} ))"
+curPos[0]="$(( ${curPos[0]} - ${monRes[3]} ))"
+curPos[1]="$(( ${curPos[1]} - ${monRes[4]} ))"
+
+if [ "${curPos[0]}" -ge "$((${monRes[0]} / 2))" ] ; then
+    x_pos="east"
+    x_off="-$(( ${monRes[0]} - ${curPos[0]} - ${offRes[2]} ))"
+else
+    x_pos="west"
+    x_off="$(( ${curPos[0]} - ${offRes[0]} ))"
+fi
+
+if [ "${curPos[1]}" -ge "$((${monRes[1]} / 2))" ] ; then
+    y_pos="south"
+    y_off="-$(( ${monRes[1]} - ${curPos[1]} - ${offRes[3]} ))"
+else
+    y_pos="north"
+    y_off="$(( ${curPos[1]} - ${offRes[1]} ))"
+fi
+
+r_override="window{location:${x_pos} ${y_pos};anchor:${x_pos} ${y_pos};x-offset:${x_off}px;y-offset:${y_off}px;} "
+
+ if pgrep -x rofi > /dev/null; then
+     killall rofi
+     exit 0
+ fi
+ 
+ case "$1" in
+     "drun")
+         rofi -no-config -no-lazy-grab -show drun -theme ~/.config/rofi/drun.rasi
+         ;;
+    "clipboard")
+        selection=$(cliphist list | cut -d' ' -f2- | rofi -no-config -no-lazy-grab -dmenu -p "" -theme ~/.config/rofi/clipboard.rasi  -theme-str "${r_override}")
+        if [ -n "$selection" ]; then
+            echo -n "$selection" | wl-copy
+        fi
+        ;;
+     *)
+         echo "Usage: rofimenu [drun]"
+         exit 1
+         ;;
+ esac
+
+ 
+

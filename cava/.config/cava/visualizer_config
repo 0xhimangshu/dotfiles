@@ -1,0 +1,17 @@
+[general]
+bars = 14
+sensitivity = 100
+framerate = 30
+[input]
+method = pulse
+source = auto
+[output]
+method = raw
+raw_target = /tmp/cava_visualizer.fifo
+data_format = ascii
+ascii_max_range = 11
+[smoothing]
+integral = 64
+monstercat = 1
+waves = 1
+gravity = 100

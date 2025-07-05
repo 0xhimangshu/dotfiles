@@ -1,0 +1,70 @@
+  UNIT                                                  LOAD   ACTIVE SUB     DESCRIPTION
+  at-spi-dbus-bus.service                               loaded active running Accessibility services bus
+  dbus-:1.1-org.freedesktop.secrets@0.service           loaded active running dbus-:1.1-org.freedesktop.secrets@0.service
+  dbus-:1.1-org.mpris.MediaPlayer2.playerctld@0.service loaded active running dbus-:1.1-org.mpris.MediaPlayer2.playerctld@0.service
+  dbus-:1.27-org.a11y.atspi.Registry@0.service          loaded active running dbus-:1.27-org.a11y.atspi.Registry@0.service
+  dbus-broker.service                                   loaded active running D-Bus User Message Bus
+  dconf.service                                         loaded active running User preferences database
+  keyboxd.service                                       loaded active running GnuPG public key management service
+  pipewire-pulse.service                                loaded active running PipeWire PulseAudio
+  pipewire.service                                      loaded active running PipeWire Multimedia Service
+  wireplumber.service                                   loaded active running Multimedia Service Session Manager
+  xdg-desktop-portal.service                            loaded active running Portal service
+  xdg-document-portal.service                           loaded active running flatpak document portal service
+  xdg-permission-store.service                          loaded active running sandboxed app permission store
+
+Legend: LOAD   → Reflects whether the unit definition was properly loaded.
+        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.
+        SUB    → The low-level unit activation state, values depend on unit type.
+
+13 loaded units listed.
+--- System services ---
+  UNIT                                                  LOAD   ACTIVE SUB     DESCRIPTION
+  bluetooth.service                                     loaded active running Bluetooth service
+  dbus-broker.service                                   loaded active running D-Bus System Message Bus
+  dhcpcd.service                                        loaded active running DHCP/ IPv4LL/ IPv6RA/ DHCPv6 client on all interfaces
+  dirmngr@etc-pacman.d-gnupg.service                    loaded active running GnuPG network certificate management daemon for /etc/pacman.d/gnupg
+  getty@tty1.service                                    loaded active running Getty on tty1
+  kmod-static-nodes.service                             loaded active exited  Create List of Static Device Nodes
+  ldconfig.service                                      loaded active exited  Rebuild Dynamic Linker Cache
+  mongodb.service                                       loaded active running MongoDB Database Server
+  NetworkManager-wait-online.service                    loaded active exited  Network Manager Wait Online
+  NetworkManager.service                                loaded active running Network Manager
+  polkit.service                                        loaded active running Authorization Manager
+  power-profiles-daemon.service                         loaded active running Power Profiles daemon
+  rtkit-daemon.service                                  loaded active running RealtimeKit Scheduling Policy Service
+  systemd-backlight@backlight:intel_backlight.service   loaded active exited  Load/Save Screen Backlight Brightness of backlight:intel_backlight
+  systemd-boot-random-seed.service                      loaded active exited  Update Boot Loader Random Seed
+  systemd-fsck@dev-disk-by\x2duuid-51A2\x2d89A8.service loaded active exited  File System Check on /dev/disk/by-uuid/51A2-89A8
+  systemd-journal-catalog-update.service                loaded active exited  Rebuild Journal Catalog
+  systemd-journal-flush.service                         loaded active exited  Flush Journal to Persistent Storage
+  systemd-journald.service                              loaded active running Journal Service
+  systemd-logind.service                                loaded active running User Login Management
+  systemd-modules-load.service                          loaded active exited  Load Kernel Modules
+  systemd-random-seed.service                           loaded active exited  Load/Save OS Random Seed
+  systemd-remount-fs.service                            loaded active exited  Remount Root and Kernel File Systems
+  systemd-resolved.service                              loaded active running Network Name Resolution
+  systemd-sysctl.service                                loaded active exited  Apply Kernel Variables
+  systemd-sysusers.service                              loaded active exited  Create System Users
+  systemd-timesyncd.service                             loaded active running Network Time Synchronization
+  systemd-tmpfiles-setup-dev-early.service              loaded active exited  Create Static Device Nodes in /dev gracefully
+  systemd-tmpfiles-setup-dev.service                    loaded active exited  Create Static Device Nodes in /dev
+  systemd-tmpfiles-setup.service                        loaded active exited  Create System Files and Directories
+  systemd-udev-load-credentials.service                 loaded active exited  Load udev Rules from Credentials
+  systemd-udev-trigger.service                          loaded active exited  Coldplug All udev Devices
+  systemd-udevd.service                                 loaded active running Rule-based Manager for Device Events and Files
+  systemd-update-done.service                           loaded active exited  Update is Completed
+  systemd-update-utmp.service                           loaded active exited  Record System Boot/Shutdown in UTMP
+  systemd-user-sessions.service                         loaded active exited  Permit User Sessions
+  systemd-userdbd.service                               loaded active running User Database Manager
+  systemd-vconsole-setup.service                        loaded active exited  Virtual Console Setup
+  upower.service                                        loaded active running Daemon for power management
+  user-runtime-dir@1000.service                         loaded active exited  User Runtime Directory /run/user/1000
+  user@1000.service                                     loaded active running User Manager for UID 1000
+  wpa_supplicant.service                                loaded active running WPA supplicant
+
+Legend: LOAD   → Reflects whether the unit definition was properly loaded.
+        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.
+        SUB    → The low-level unit activation state, values depend on unit type.
+
+42 loaded units listed.
