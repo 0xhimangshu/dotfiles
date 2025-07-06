@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+# Weather codes and their corresponding icons
+declare -A WEATHER_CODES=(
+    ["113"]="☀️"
+    ["116"]="⛅"
+    ["119"]="☁️"
+    ["122"]="☁️"
+    ["143"]="☁️"
+    ["176"]="🌧️"
+    ["179"]="🌧️"
+    ["182"]="🌧️"
+    ["185"]="🌧️"
+    ["200"]="⛈️"
+    ["227"]="🌨️"    
+    ["230"]="🌨️"
+    ["248"]="☁️"
+    ["260"]="☁️"
+    ["263"]="🌧️"
+    ["266"]="🌧️"
+    ["281"]="🌧️"
+    ["284"]="🌧️"
+    ["293"]="🌧️"
+    ["296"]="🌧️"
+    ["299"]="🌧️"
+    ["302"]="🌧️"
+    ["305"]="🌧️"
+    ["308"]="🌧️"
+    ["311"]="🌧️"
+    ["314"]="🌧️"
+    ["317"]="🌧️"
+    ["320"]="🌨️"
+    ["323"]="🌨️"
+    ["326"]="🌨️"
+    ["329"]="❄️"
+    ["332"]="❄️"
+    ["335"]="❄️"
+    ["338"]="❄️"
+    ["350"]="🌧️"
+    ["353"]="🌧️"
+    ["356"]="🌧️"
+    ["359"]="🌧️"
+    ["362"]="🌧️"
+    ["365"]="🌧️"
+    ["368"]="🌧️"
+    ["371"]="❄️"
+    ["374"]="🌨️"
+    ["377"]="🌨️"
+    ["386"]="🌨️"
+    ["389"]="🌨️"
+    ["392"]="🌧️"
+    ["395"]="❄️"
+)
+
+# Fetch weather data
+WEATHER_DATA=$(curl -s "wttr.in/Jorhat?format=j1")
+
+# Extract current conditions
+CURRENT_TEMP=$(echo "$WEATHER_DATA" | jq -r '.current_condition[0].temp_C')
+FEELS_LIKE=$(echo "$WEATHER_DATA" | jq -r '.current_condition[0].FeelsLikeC')
+WEATHER_CODE=$(echo "$WEATHER_DATA" | jq -r '.current_condition[0].weatherCode')
+WEATHER_DESC=$(echo "$WEATHER_DATA" | jq -r '.current_condition[0].weatherDesc[0].value')
+WIND_SPEED=$(echo "$WEATHER_DATA" | jq -r '.current_condition[0].windspeedKmph')
+HUMIDITY=$(echo "$WEATHER_DATA" | jq -r '.current_condition[0].humidity')
+
+# Get weather icon
+ICON="${WEATHER_CODES["$WEATHER_CODE"]:-"☁️"}"
+
+# Format temperature with + for positive single digits
+if [[ "$FEELS_LIKE" =~ ^-?[0-9]+\.?[0-9]*$ ]]; then
+    TEMP_INT=${FEELS_LIKE%.*}
+    EXTRA_CHAR=""
+    if [ "$TEMP_INT" -gt 0 ] && [ "$TEMP_INT" -lt 10 ]; then
+        EXTRA_CHAR="+"
+    fi
+else
+    TEMP_INT=0
+    EXTRA_CHAR=""
+fi
+
+# Create JSON output
+TEXT="$ICON ${EXTRA_CHAR}${FEELS_LIKE}°C"
+TOOLTIP="<b>${WEATHER_DESC} ${CURRENT_TEMP}°C</b>\nFeels like: ${FEELS_LIKE}°C\nWind: ${WIND_SPEED}Km/h\nHumidity: ${HUMIDITY}%"
+
+# Output JSON
+echo "{\"text\": \"$TEXT\", \"tooltip\": \"$TOOLTIP\"}"

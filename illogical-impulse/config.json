@@ -1,0 +1,154 @@
+{
+    "ai": {
+        "systemPrompt": "## Style\n- Use casual tone, don't be formal! Make sure you answer precisely without hallucination and prefer bullet points over walls of text. You can have a friendly greeting at the beginning of the conversation, but don't repeat the user's question\n\n## Presentation\n- Use Markdown features in your response: \n  - **Bold** text to **highlight keywords** in your response\n  - **Split long information into small sections** with h2 headers and a relevant emoji at the start of it (for example `## 🐧 Linux`). Bullet points are preferred over long paragraphs, unless you're offering writing support or instructed otherwise by the user.\n- Asked to compare different options? You should firstly use a table to compare the main aspects, then elaborate or include relevant comments from online forums *after* the table. Make sure to provide a final recommendation for the user's use case!\n- Use LaTeX formatting for mathematical and scientific notations whenever appropriate. Enclose all LaTeX '$$' delimiters. NEVER generate LaTeX code in a latex block unless the user explicitly asks for it. DO NOT use LaTeX for regular documents (resumes, letters, essays, CVs, etc.).\n\nThanks!\n\n## Tools\nMay or may not be available depending on the user's settings. If they're available, follow these guidelines:\n\n### Search\n- When user asks for information that might benefit from up-to-date information, use this to get search access\n\n### Shell configuration\n- Always fetch the config options to see the available keys before setting\n- Avoid unnecessarily asking the user to confirm the changes they explicitly asked for, just do it\n"
+    },
+    "appearance": {
+        "extraBackgroundTint": true,
+        "fakeScreenRounding": 2,
+        "palette": {
+            "type": "auto"
+        },
+        "transparency": false
+    },
+    "apps": {
+        "bluetooth": "kcmshell6 kcm_bluetooth",
+        "network": "plasmawindowed org.kde.plasma.networkmanagement",
+        "networkEthernet": "kcmshell6 kcm_networkmanagement",
+        "taskManager": "plasma-systemmonitor --page-name Processes",
+        "terminal": "kitty -1"
+    },
+    "audio": {
+        "protection": {
+            "enable": true,
+            "maxAllowed": 90,
+            "maxAllowedIncrease": 10
+        }
+    },
+    "background": {
+        "clockX": -500,
+        "clockY": -500,
+        "fixedClockPosition": false
+    },
+    "bar": {
+        "borderless": false,
+        "bottom": false,
+        "cornerStyle": 0,
+        "resources": {
+            "alwaysShowCpu": false,
+            "alwaysShowSwap": true
+        },
+        "screenList": [
+        ],
+        "showBackground": true,
+        "topLeftIcon": "spark",
+        "tray": {
+            "monochromeIcons": true
+        },
+        "utilButtons": {
+            "showColorPicker": false,
+            "showDarkModeToggle": true,
+            "showKeyboardToggle": true,
+            "showMicToggle": false,
+            "showScreenSnip": true
+        },
+        "verbose": true,
+        "weather": {
+            "city": "",
+            "enable": false,
+            "enableGPS": true,
+            "fetchInterval": 10,
+            "useUSCS": false
+        },
+        "workspaces": {
+            "alwaysShowNumbers": false,
+            "monochromeIcons": true,
+            "showAppIcons": true,
+            "showNumberDelay": 300,
+            "shown": 10
+        }
+    },
+    "battery": {
+        "automaticSuspend": true,
+        "critical": 5,
+        "low": 20,
+        "suspend": 3
+    },
+    "dock": {
+        "enable": false,
+        "height": 60,
+        "hoverRegionHeight": 2,
+        "hoverToReveal": true,
+        "monochromeIcons": true,
+        "pinnedApps": [
+            "org.kde.dolphin",
+            "kitty"
+        ],
+        "pinnedOnStartup": false
+    },
+    "hacks": {
+        "arbitraryRaceConditionDelay": 20
+    },
+    "language": {
+        "translator": {
+            "engine": "auto",
+            "sourceLanguage": "auto",
+            "targetLanguage": "auto"
+        }
+    },
+    "networking": {
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+    },
+    "osd": {
+        "timeout": 1000
+    },
+    "osk": {
+        "layout": "qwerty_full",
+        "pinnedOnStartup": false
+    },
+    "overview": {
+        "columns": 5,
+        "rows": 2,
+        "scale": 0.18
+    },
+    "policies": {
+        "ai": 1,
+        "weeb": 1
+    },
+    "resources": {
+        "updateInterval": 3000
+    },
+    "search": {
+        "engineBaseUrl": "https://www.google.com/search?q=",
+        "excludedSites": [
+            "quora.com"
+        ],
+        "nonAppResultDelay": 30,
+        "prefix": {
+            "action": "/",
+            "clipboard": ";",
+            "emojis": ":"
+        },
+        "sloppy": false
+    },
+    "sidebar": {
+        "booru": {
+            "allowNsfw": false,
+            "defaultProvider": "yandere",
+            "limit": 20,
+            "zerochan": {
+                "username": "[unset]"
+            }
+        },
+        "translator": {
+            "delay": 300
+        }
+    },
+    "time": {
+        "dateFormat": "dddd, dd/MM",
+        "format": "hh:mm"
+    },
+    "windows": {
+        "centerTitle": true,
+        "showTitlebar": true
+    }
+}
