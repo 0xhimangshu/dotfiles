@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 # Weather codes and their corresponding icons
 declare -A WEATHER_CODES=(
     ["113"]="☀️"
@@ -54,6 +55,14 @@ declare -A WEATHER_CODES=(
 
 # Fetch weather data
 WEATHER_DATA=$(curl -s "wttr.in/Jorhat?format=j1")
+CURL_EXIT=$?
+
+# Check for curl or jq error or empty data
+if [ $CURL_EXIT -ne 0 ] || [ -z "$WEATHER_DATA" ] || ! echo "$WEATHER_DATA" | jq . >/dev/null 2>&1; then
+    # Show just a default icon (cloud) if error
+    echo '{"text": "☁️", "tooltip": ""}'
+    exit 0
+fi
 
 # Extract current conditions
 CURRENT_TEMP=$(echo "$WEATHER_DATA" | jq -r '.current_condition[0].temp_C')

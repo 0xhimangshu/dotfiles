@@ -1,24 +1,18 @@
 #!/usr/bin/env bash
 
-# Screen Recording Script for wf-recorder
-# Usage: screenrec [region|monitor|window|status|stop]
-
 RECORDINGS_DIR="$HOME/Videos/Recordings"
 PID_FILE="/tmp/wf-recorder.pid"
 STATUS_FILE="/tmp/wf-recorder.status"
 LOG_FILE="/tmp/wf-recorder.log"
 
-# Create recordings directory if it doesn't exist
 mkdir -p "$RECORDINGS_DIR"
 
-# Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Function to show help
 show_help() {
     cat << EOF
 Screen Recording Script for wf-recorder
@@ -36,118 +30,128 @@ OPTIONS:
 EXAMPLES:
     screenrec region        # Select area to record
     screenrec monitor       # Record full screen
-    screenrec window       # Select window to record
-    screenrec status       # Get status for waybar
-    screenrec stop         # Stop recording
+    screenrec window        # Select window to record
+    screenrec status        # Get status for waybar
+    screenrec stop          # Stop recording
 
 Files are saved to: $RECORDINGS_DIR
 EOF
 }
 
-# Function to generate filename with timestamp
 generate_filename() {
     local prefix="$1"
-    local timestamp=$(date +"%Y%m%d_%H%M%S")
+    local timestamp
+    timestamp=$(date +"%Y%m%d_%H%M%S")
     echo "${RECORDINGS_DIR}/${prefix}_${timestamp}.mp4"
 }
 
-# Function to check if recording is active
+get_active_audio_monitor() {
+    local default_sink
+    default_sink=$(pactl get-default-sink 2>/dev/null)
+    if [[ -z "$default_sink" ]]; then
+        default_sink=$(pactl info | grep 'Default Sink:' | awk '{print $3}')
+    fi
+    if [[ -z "$default_sink" ]]; then
+        echo ""
+        return 1
+    fi
+    echo "${default_sink}.monitor"
+}
+
 is_recording() {
     [[ -f "$PID_FILE" ]] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null
 }
 
-# Function to start recording with common options
 start_recording() {
     local geometry="$1"
     local filename="$2"
     local description="$3"
-    
+
     if is_recording; then
         echo -e "${RED}Recording already in progress!${NC}"
         exit 1
     fi
-    
+
+    # Get the active audio monitor
+    local audio_monitor
+    audio_monitor=$(get_active_audio_monitor)
+    if [[ -z "$audio_monitor" ]]; then
+        echo -e "${RED}Could not determine active audio output monitor!${NC}"
+        exit 1
+    fi
+
     echo -e "${GREEN}Starting $description...${NC}"
     echo -e "${BLUE}Output file: $filename${NC}"
-    
-    # Create status file
+    echo -e "${BLUE}Audio source: $audio_monitor${NC}"
+
     echo "recording" > "$STATUS_FILE"
     echo "$(date +%s)" >> "$STATUS_FILE"
     echo "$description" >> "$STATUS_FILE"
     echo "$filename" >> "$STATUS_FILE"
-    
-    # Start wf-recorder
+
     if [[ -n "$geometry" ]]; then
-        wf-recorder --no-audio -g "$geometry" -f "$filename" > "$LOG_FILE" 2>&1 &
+        wf-recorder --audio="$audio_monitor" -g "$geometry" -f "$filename" --codec=libx264 --pixel-format=yuv420p > "$LOG_FILE" 2>&1 &
     else
-        wf-recorder --no-audio -f "$filename" > "$LOG_FILE" 2>&1 &
+        wf-recorder --audio="$audio_monitor" -f "$filename" --codec=libx264 --pixel-format=yuv420p > "$LOG_FILE" 2>&1 &
     fi
-    
+
     local recorder_pid=$!
     echo "$recorder_pid" > "$PID_FILE"
-    
-    # Wait a moment to check if recording started successfully
+
     sleep 1
     if ! kill -0 "$recorder_pid" 2>/dev/null; then
         echo -e "${RED}Failed to start recording. Check $LOG_FILE for details.${NC}"
         cleanup_files
         exit 1
     fi
-    
+
     echo -e "${GREEN}Recording started successfully!${NC}"
     echo -e "${YELLOW}Use 'screenrec stop' to stop recording${NC}"
 }
 
-# Function to cleanup files
 cleanup_files() {
     rm -f "$PID_FILE" "$STATUS_FILE"
 }
 
-# Function to record region
 record_region() {
     echo -e "${BLUE}Select the region to record...${NC}"
-    
-    # Use slurp to select geometry
+
     if ! command -v slurp &> /dev/null; then
         echo -e "${RED}Error: slurp is required for region selection${NC}"
         echo -e "${YELLOW}Install with: sudo pacman -S slurp${NC}"
         exit 1
     fi
-    
+
     local geometry
     geometry=$(slurp 2>/dev/null)
-    
+
     if [[ -z "$geometry" ]]; then
         echo -e "${RED}Region selection cancelled${NC}"
         exit 1
     fi
-    
+
     local filename
     filename=$(generate_filename "region")
-    
+
     start_recording "$geometry" "$filename" "region recording"
 }
 
-# Function to record monitor
 record_monitor() {
     echo -e "${BLUE}Available outputs:${NC}"
-    
-    # List available outputs
+
     if command -v wlr-randr &> /dev/null; then
         wlr-randr | grep -E "^[A-Z]" | nl -v0
         echo
         read -p "Select output number (0 for all): " output_num
-        
+
         if [[ "$output_num" == "0" ]]; then
-            # Record all outputs
             local filename
             filename=$(generate_filename "fullscreen")
             start_recording "" "$filename" "full screen recording"
         else
-            # Get specific output name
             local output_name
             output_name=$(wlr-randr | grep -E "^[A-Z]" | sed -n "$((output_num + 1))p" | awk '{print $1}')
-            
+
             if [[ -n "$output_name" ]]; then
                 local filename
                 filename=$(generate_filename "monitor_${output_name}")
@@ -165,76 +169,66 @@ record_monitor() {
     fi
 }
 
-# Function to record window
 record_window() {
     if ! command -v slurp &> /dev/null; then
         echo -e "${RED}Error: slurp is required for window selection${NC}"
         echo -e "${YELLOW}Install with: sudo pacman -S slurp${NC}"
         exit 1
     fi
-    
+
     echo -e "${BLUE}Click on the window to record...${NC}"
-    
-    # Get window geometry using swaymsg and slurp
+
     local geometry
     if command -v swaymsg &> /dev/null; then
-        # For Sway
         geometry=$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp -f "%x,%y %wx%h")
     else
-        # Fallback to regular slurp
         geometry=$(slurp 2>/dev/null)
     fi
-    
+
     if [[ -z "$geometry" ]]; then
         echo -e "${RED}Window selection cancelled${NC}"
         exit 1
     fi
-    
+
     local filename
     filename=$(generate_filename "window")
-    
+
     start_recording "$geometry" "$filename" "window recording"
 }
-
-# Function to stop recording
+        
 stop_recording() {
     if ! is_recording; then
         echo -e "${YELLOW}No recording in progress${NC}"
         exit 0
     fi
-    
+
     local pid
     pid=$(cat "$PID_FILE")
-    
+
     echo -e "${BLUE}Stopping recording...${NC}"
-    
-    # Send SIGINT to gracefully stop wf-recorder
+
     kill -INT "$pid" 2>/dev/null
-    
-    # Wait for process to finish
+
     local count=0
     while kill -0 "$pid" 2>/dev/null && [[ $count -lt 10 ]]; do
         sleep 1
         ((count++))
     done
-    
-    # Force kill if still running
+
     if kill -0 "$pid" 2>/dev/null; then
         kill -KILL "$pid" 2>/dev/null
     fi
-    
-    # Get recording info
+
     if [[ -f "$STATUS_FILE" ]]; then
         local start_time filename
         start_time=$(sed -n '2p' "$STATUS_FILE")
         filename=$(sed -n '4p' "$STATUS_FILE")
         local duration=$(($(date +%s) - start_time))
-        
+
         echo -e "${GREEN}Recording stopped!${NC}"
         echo -e "${BLUE}Duration: ${duration}s${NC}"
         echo -e "${BLUE}File: $filename${NC}"
-        
-        # Show file size if it exists
+
         if [[ -f "$filename" ]]; then
             local size
             size=$(du -h "$filename" | cut -f1)
@@ -243,40 +237,38 @@ stop_recording() {
     else
         echo -e "${GREEN}Recording stopped!${NC}"
     fi
-    
+
     cleanup_files
 }
 
-# Function to show status (for waybar)
 show_status() {
     if ! is_recording; then
         echo '{"text": "", "class": "idle", "tooltip": "Not recording"}'
         return
     fi
-    
+
     if [[ -f "$STATUS_FILE" ]]; then
         local start_time description
         start_time=$(sed -n '2p' "$STATUS_FILE")
         description=$(sed -n '3p' "$STATUS_FILE")
-        
+
         local duration=$(($(date +%s) - start_time))
         local mins=$((duration / 60))
         local secs=$((duration % 60))
-        
+
         local time_str
         if [[ $mins -gt 0 ]]; then
             time_str=$(printf "%dm%02ds" $mins $secs)
         else
             time_str=$(printf "%ds" $secs)
         fi
-        
+
         echo "{\"text\": \"🔴 $time_str\", \"class\": \"recording\", \"tooltip\": \"Recording $description\"}"
     else
         echo '{"text": "🔴 REC", "class": "recording", "tooltip": "Recording in progress"}'
     fi
 }
 
-# Main script logic
 case "${1:-help}" in
     "region")
         record_region

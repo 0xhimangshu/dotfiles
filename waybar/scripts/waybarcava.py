@@ -7,6 +7,7 @@ import sys
 import json
 import math
 from collections import deque
+import signal
 
 NUM_BARS = 14
 CAVA_FIFO = "/tmp/cava_visualizer.fifo"
@@ -113,12 +114,50 @@ class SmoothVisualizer:
 
 
 def check_playing():
+    """
+    audio detection that only returns True when there's actual audio output.
+    returns False during silence (like when Discord is connected but no one is speaking).
+    """
     try:
         result = subprocess.run(
-            ["playerctl", "status"], capture_output=True, text=True, timeout=0.3
+            ["pactl", "list", "sink-inputs", "short"],
+            capture_output=True,
+            text=True,
+            timeout=2,
         )
-        return result.returncode == 0 and result.stdout.strip() == "Playing"
-    except:
+
+        if result.returncode != 0 or not result.stdout.strip():
+            return False
+
+        detailed_result = subprocess.run(
+            ["pactl", "list", "sink-inputs"], capture_output=True, text=True, timeout=2
+        )
+
+        if detailed_result.returncode != 0:
+            return False
+
+        output = detailed_result.stdout
+
+        sections = output.split("Sink Input #")[1:]
+
+        for section in sections:
+            lines = section.split("\n")
+            is_muted = True
+            is_corked = True
+
+            for line in lines:
+                line = line.strip()
+                if "Mute: no" in line:
+                    is_muted = False
+                elif "Corked: no" in line:
+                    is_corked = False
+
+            if not is_muted and not is_corked:
+                return True
+
+        return False
+
+    except Exception:
         return False
 
 
@@ -167,16 +206,23 @@ gravity = 100
 
 def start_cava():
     """Start cava process with separate config"""
-    subprocess.Popen(
+    # Return the process object so we can kill it later
+    return subprocess.Popen(
         ["cava", "-p", CAVA_CONFIG],  # Use separate config file
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
     )
 
 
-def cleanup():
+def cleanup(cava_proc=None):
     """Clean up resources"""
     try:
+        if cava_proc is not None:
+            cava_proc.terminate()
+            try:
+                cava_proc.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                cava_proc.kill()
         if os.path.exists(CAVA_FIFO):
             os.remove(CAVA_FIFO)
         subprocess.run(["pkill", "-f", CAVA_CONFIG], stderr=subprocess.DEVNULL)
@@ -190,10 +236,11 @@ def main():
     if len(sys.argv) > 1 and sys.argv[1] in ["blocks", "wave", "braille"]:
         style = sys.argv[1]
 
+    cava_proc = None
     try:
         setup_cava()
         time.sleep(0.5)
-        start_cava()
+        cava_proc = start_cava()
         time.sleep(1)
 
         visualizer = SmoothVisualizer(
@@ -202,12 +249,29 @@ def main():
 
         with open(CAVA_FIFO, "r") as fifo:
             frame_count = 0
+            idle_count = 0
+            max_idle = 10  # Number of idle cycles before killing cava
 
             while True:
                 if not check_playing():
-                    print('{"text": ""}', flush=True)
+                    print('{"text": " ", "class": "idle"}', flush=True)
+                    idle_count += 1
+                    if cava_proc is not None:
+                        # Kill cava after max_idle idle cycles
+                        if idle_count >= max_idle:
+                            cava_proc.terminate()
+                            try:
+                                cava_proc.wait(timeout=2)
+                            except subprocess.TimeoutExpired:
+                                cava_proc.kill()
+                            cava_proc = None
                     time.sleep(0.2)
                     continue
+                else:
+                    idle_count = 0
+                    if cava_proc is None:
+                        cava_proc = start_cava()
+                        time.sleep(1)
 
                 try:
                     line = fifo.readline()
@@ -246,7 +310,7 @@ def main():
     except Exception:
         print('{"text": "⠀", "class": "error"}', flush=True)
     finally:
-        cleanup()
+        cleanup(cava_proc)
 
 
 if __name__ == "__main__":

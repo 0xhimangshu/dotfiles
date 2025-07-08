@@ -11,10 +11,10 @@
   --red-bright: rgb(255, 78, 78);
   --orange: rgb(255, 183, 27);
   --green-bright: rgb(109, 255, 95);
-  --test: rgba(87, 87, 87, 0.443);
+  --test: rgba(87, 87, 87, 0.384);
 } */
 
-@define-color base rgba(87, 87, 87, 0.443);
+@define-color base rgba(80, 70, 87, 0.3);
 @define-color text rgb(205, 214, 244);
 @define-color border rgb(52, 40, 121);
 @define-color yellow rgb(249, 226, 175);
@@ -40,10 +40,7 @@ window#waybar {
 
 tooltip {
   background: @base;
-  border-radius: 16px;
-  /* border-width: 1px;
-  border-style: solid;
-  border-color: #11111b; */
+  border-radius: 12px;
 }
 
 #workspaces button {
@@ -76,7 +73,7 @@ tooltip {
 #power-profiles-daemon {
   border-right: 0px;
   border-left: 0px;
-  border-radius: 16px 0px 0px 16px;
+  border-radius: 0px;
 }
 
 #power-profiles-daemon.performance {
@@ -89,78 +86,62 @@ tooltip {
   color: @green-bright;
 }
 
-#custom-power,
-#custom-quit,
-#custom-lock,
-#custom-reboot {
+#custom-power-menu {
   color: @yellow;
-  background: #4f4f4f;
-  border-radius: 16px;
-  padding-left: 4px;
-  padding-right: 6px;
-  margin-left: 6px;
-  /* padding: 0px; */
-  margin: 4px;
-}
-#custom-power:hover,
-#custom-quit:hover,
-#custom-lock:hover,
-#custom-reboot:hover {
-  color: #ffffff;
-  background: #4b4b4b;
-}
-
-#group-power {
-  margin: 3px;
-  border-radius: 16px;
-  background: #202131;
+  background: @base;
+  border-radius: 0px 16px 16px 0px;
+  padding-left: 8px;
+  padding-right: 10px;
   margin-right: 10px;
-  /* border: 1px solid @border; */
+  margin-left: 0px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  font-size: 16px;
 }
 
-#custom-screenrecord,
 #custom-cava,
 #taskbar,
 #power-profiles-daemon,
 #custom-mpris,
-#custom-weather,
 #window,
-#clock,
 #battery,
 #pulseaudio,
 #pulseaudio.microphone,
 #network,
 #bluetooth,
 #temperature,
-#workspaces,
 #tray,
 #backlight,
 #cpu,
 #memory,
-#hyprland-workspaces,
 #custom-tlp,
-#custom-notification,
 #custom-fanctl {
   background: @base;
-  opacity: 0.8;
   padding: 0px 10px;
   margin: 3px 0px;
-  /* border: 1px solid @border; */
+}
+
+#clock {
+  background: @base;
+  color: @peach;
+  border-radius: 0px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  padding-left: 8px;
 }
 
 #custom-notification {
   background: @base;
-  border-radius: 16px;
-  margin-right: 10px;
-  padding-left: 8px;
-  padding-right: 4px;
-  /* border: 1px solid @border; */
+  border-radius: 0px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  padding-left: 6px;
+  padding-right: 8px;
 }
 
 #taskbar {
   background: @base;
-  border-radius: 16px;
-  margin-left: 10px;
+  border-radius: 0px 16px 16px 0px;
   padding-left: 2px;
   padding-right: 2px;
 }
@@ -188,7 +169,6 @@ tooltip {
 }
 
 #power-profiles-daemon {
-  /* border: 1px solid @border; */
   border-right: 0px;
 }
 
@@ -196,27 +176,21 @@ tooltip {
   color: @red;
 }
 
-#backlight {
-  border-radius: 16px 0px 0px 16px;
-  border-right: 0px;
-}
-
 #tray {
-  border-radius: 16px;
-  margin-right: 10px;
+  border-radius: 16px 0px 0px 16px;
 }
 
 #custom-menu {
   color: @yellow;
   background: @base;
-  border-radius: 16px;
-  padding-left: 5px;
+  border-radius: 16px 0px 0px 16px;
+  padding-left: 8px;
   padding-right: 8px;
+  margin-top: 3px;
+  margin-bottom: 3px;
   margin-left: 10px;
   margin-right: 0;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  font-size: 1px;
+  font-size: 16px;
 }
 
 menu {
@@ -236,8 +210,9 @@ menuitem {
 }
 
 #custom-screenrecord {
-  margin-left: 10px;
-  border-radius: 16px;
+  border-radius: 0;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 #custom-screenrecord.recording {
@@ -272,22 +247,32 @@ menuitem {
 }
 
 #custom-cava {
-  border-radius: 16px;
-  margin-right: 10px;
+  border-radius: 0px 16px 16px 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+#custom-cava.idle {
+  background: @base;
+  color: @text;
+  border-radius: 0px 20px 20px 0px;
+  padding: 3px;
+  margin: 0px;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 #custom-mpris {
   color: @yellow;
-  border-radius: 16px;
-  margin-right: 10px;
+  border-radius: 0px;
 }
 
 #workspaces {
   background: @base;
-  border-radius: 16px;
+  border-radius: 16px 0px 0px 16px;
   margin-left: 10px;
   padding-right: 0px;
-  padding-left: 5px;
+  padding-left: 4px;
+  margin: 3px 0px;
 }
 
 #window {
@@ -296,24 +281,14 @@ menuitem {
   margin-right: 10px;
 }
 
-#clock {
-  color: @peach;
-  border-radius: 16px 0px 0px 16px;
-  margin-left: 10px;
-  border-right: 0px;
-}
-
 #network {
   color: @yellow;
-  border-radius: 16px 0px 0px 16px;
-  border-right: 0px;
+  border-radius: 0px;
 }
 
 #bluetooth {
   color: @blue;
-  border-radius: 0px 16px 16px 0px;
-  margin-right: 10px;
-  border-left: 0px;
+  border-radius: 0px;
 }
 
 #pulseaudio {
@@ -325,21 +300,21 @@ menuitem {
 #pulseaudio.microphone {
   color: @purple;
   border-left: 0px;
-  border-radius: 0px 16px 16px 0px;
-  margin-right: 10px;
+  border-radius: 0px;
 }
 
 #battery {
   color: @green;
-  border-radius: 0 16px 16px 0;
-  margin-right: 10px;
+  border-radius: 0px;
   border-left: 0px;
 }
 
 #custom-weather {
-  border-radius: 0px 16px 16px 0px;
-  border-left: 0px;
-  margin-left: 0px;
+  border-radius: 0px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  padding-left: 8px;
+  background: @base;
 }
 
 #temperature {
@@ -348,10 +323,10 @@ menuitem {
 }
 
 #cpu {
-  border-radius: 16px 0px 0px 16px;
+  border-radius: 0px;
   border-right: 0px;
 }
 #memory {
-  border-radius: 0px 16px 16px 0px;
+  border-radius: 0px;
   border-left: 0px;
 }

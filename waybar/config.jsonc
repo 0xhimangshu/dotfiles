@@ -8,35 +8,64 @@
   "height": 30,
   "reload_style_on_change": true,
 
+  // "modules-left": [
+  //   "custom/menu",
+  //   "custom/screenrecord",
+  //   "clock",
+  //   "custom/weather",
+  //   "custom/swaync",
+  //   "wlr/taskbar",
+  //   "hyprland/workspaces"
+  // ],
+  // "modules-center": [
+  //   "custom/cava",
+  //   "custom/mpris",
+  //   "custom/notification",
+  //   "cpu",
+  //   "temperature",
+  //   "memory"
+  // ],
+
+  // "modules-right": [
+  //   "network",
+  //   "bluetooth",
+  //   "power-profiles-daemon",
+  //   "custom/fanctl",
+  //   "battery",
+  //   "backlight",
+  //   "pulseaudio",
+  //   "pulseaudio#microphone",
+  //   "tray",
+  //   "group/group-power"
+  // ],
   "modules-left": [
     "custom/menu",
     "custom/screenrecord",
-    "clock",
-    "custom/weather",
-    "custom/swaync",
-    "wlr/taskbar",
-    "hyprland/workspaces"
+    "pulseaudio",
+    "pulseaudio#microphone",
+    "backlight",
+    "bluetooth",
+    "custom/mpris",
+    "custom/cava"
   ],
   "modules-center": [
-    "custom/cava",
-    "custom/mpris",
+    "hyprland/workspaces",
+    "custom/weather",
+    "clock",
     "custom/notification",
-    "cpu",
-    "temperature",
-    "memory"
+    "wlr/taskbar"
   ],
 
   "modules-right": [
+    "tray",
     "network",
-    "bluetooth",
-    "power-profiles-daemon",
+    "cpu",
+    "temperature",
+    "memory",
     "custom/fanctl",
     "battery",
-    "backlight",
-    "pulseaudio",
-    "pulseaudio#microphone",
-    "tray",
-    "group/group-power"
+    "power-profiles-daemon",
+    "custom/power-menu"
   ],
 
   "hyprland/workspaces": {
@@ -63,7 +92,6 @@
     "tooltip-format": "{name}",
     "on-click": "activate",
     "icon-size": 18,
-    // "spacing": 10,
     "icon-theme": "Tela-circle-blue-dark"
   },
 
@@ -96,32 +124,9 @@
     "interval": 1,
     "format": " {usage}%",
     "rotate": 0,
-    "format-alt": " {usage}% {icon0} {icon1}",
-    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
+    "format-alt": " {usage}%"
   },
 
-  // "cava": {
-  //   "framerate": 60,
-  //   "autosens": 0,
-  //   "sensitivity": 10,
-  //   "bars": 14,
-  //   "lower_cutoff_freq": 100,
-  //   "higher_cutoff_freq": 10000,
-  //   "hide_on_silence": false,
-  //   "method": "pulse",
-  //   "source": "auto",
-  //   "stereo": true,
-  //   "reverse": false,
-  //   "bar_delimiter": 0,
-  //   "monstercat": false,
-  //   "waves": false,
-  //   "noise_reduction": 0.77,
-  //   "input_delay": 2,
-  //   "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
-  //   "actions": {
-  //     "on-click-right": "mode"
-  //   }
-  // },
   "custom/cava": {
     "format": "{}",
     "exec-if": "playerctl status > /dev/null 2>&1",
@@ -137,36 +142,19 @@
     "on-scroll-down": "playerctl position 5-"
   },
 
-  "group/group-power": {
-    "orientation": "inherit",
-    "drawer": {
-      "transition-duration": 500,
-      "children-class": "not-power",
-      "transition-left-to-right": false
-    },
-    "modules": ["custom/power", "custom/quit", "custom/lock", "custom/reboot"]
-  },
-  "custom/quit": {
-    "format": "󰗼",
+  "custom/power-menu": {
+    "format": "<span font=\"12px\"></span>",
     "tooltip": false,
-    "on-click": "hyprctl dispatch exit"
+    "menu": "on-click",
+    "menu-file": "$HOME/.config/waybar/menus/power.menu.xml",
+    "menu-actions": {
+      "shutdown": "shutdown now",
+      "reboot": "reboot",
+      "sleep": "systemctl suspend",
+      "hibernate": "systemctl hibernate",
+      "logout": "hyprctl dispatch exit"
+    }
   },
-  "custom/lock": {
-    "format": "󰍁",
-    "tooltip": false,
-    "on-click": "swaylock"
-  },
-  "custom/reboot": {
-    "format": "󰜉",
-    "tooltip": false,
-    "on-click": "reboot"
-  },
-  "custom/power": {
-    "format": "",
-    "tooltip": false,
-    "on-click": "shutdown now"
-  },
-
   "memory": {
     "states": {
       "c": 90,
@@ -174,12 +162,12 @@
       "m": 30
     },
     "interval": 1,
-    "format-alt": "󰾆 {used}GB",
+    "format-alt": "󰾆 {percentage}%",
     "rotate": 0,
-    "format-m": "󰾅 {used}GB",
-    "format-h": "󰓅 {used}GB",
-    "format-c": " {used}GB",
-    "format": "󰾆 {percentage}%",
+    "format-m": "󰾅 {used:0.1f}GB",
+    "format-h": "󰓅 {used:0.1f}GB",
+    "format-c": " {used:0.1f}GB",
+    "format": "󰾆 {used:0.1f}GB",
     "max-length": 10,
     "tooltip": true,
     "tooltip-format": "󰾆 {percentage}%  {used:0.1f}GB/{total:0.1f}GB"
@@ -189,8 +177,8 @@
     "format": "{:%I:%M:%S %p 󰃭 %d·%m·%Y}",
     "rotate": 0,
     "interval": 1,
-    "format-alt": "{:%R 󰃭 %d·%m·%y}",
     "tooltip-format": "<span>{calendar}</span>",
+    "on-click": "swaync-client -t -sw",
     "calendar": {
       "mode": "month",
       "mode-mon-col": 3,
@@ -271,6 +259,7 @@
     "tooltip": true,
     "on-click": "playerctl play-pause",
     "on-click-right": "playerctl next",
+    "on-click-middle": "playerctl previous",
     "on-scroll-up": "playerctl position 5+",
     "on-scroll-down": "playerctl position 5-"
   },
@@ -283,8 +272,8 @@
   },
 
   "network": {
-    "format-wifi": "󰈀 {bandwidthUpBits} {bandwidthDownBits}%",
-    "format-ethernet": "󰈁 {bandwidthUpBits} {bandwidthDownBits}",
+    "format-wifi": "󰈀 {bandwidthUpBits} {bandwidthDownBits}",
+    "format-ethernet": "󰈁  {bandwidthUpBits}  {bandwidthDownBits}",
     "tooltip-format": "{ifname} via {gwaddr}",
     "format-linked": "{ifname} (No IP)",
     "format-disconnected": "󰈂 Disconnected",
@@ -321,7 +310,7 @@
     "format": "<span font=\"16px\">󰣇</span>",
     "tooltip": false,
     "menu": "on-click",
-    "menu-file": "$HOME/.config/waybar/menu.xml",
+    "menu-file": "$HOME/.config/waybar/menus/main.menu.xml",
     "menu-actions": {
       "update_system": "kitty sh -c 'sudo pacman -Syu; exec zsh'",
       "open_terminal": "kitty",
