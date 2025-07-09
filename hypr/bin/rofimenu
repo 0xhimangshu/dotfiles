@@ -1,6 +1,5 @@
- #!/bin/bash
+#!/bin/bash
  
-
 readarray -t curPos < <(hyprctl cursorpos -j | jq -r '.x,.y')
 readarray -t monRes < <(hyprctl -j monitors | jq '.[] | select(.focused==true) | .width,.height,.scale,.x,.y')
 readarray -t offRes < <(hyprctl -j monitors | jq -r '.[] | select(.focused==true).reserved | map(tostring) | join("\n")')
