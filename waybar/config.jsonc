@@ -58,7 +58,7 @@
 
   "modules-right": [
     "tray",
-//    "network",
+    //    "network",
     "cpu",
     "temperature",
     "memory",

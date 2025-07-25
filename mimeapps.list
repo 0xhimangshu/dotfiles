@@ -1,2 +1,11 @@
 [Added Associations]
 application/gzip=nbtexplorer.desktop;
+application/x-zerosize=vivaldi-stable.desktop;
+application/yaml=code.desktop;
+image/png=swappy.desktop;
+text/plain=nvim.desktop;
+
+[Default Applications]
+x-scheme-handler/postman=Postman.desktop
+application/x-zerosize=vivaldi-stable.desktop
+text/plain=nvim.desktop
